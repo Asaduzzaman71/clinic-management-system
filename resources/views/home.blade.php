@@ -343,6 +343,7 @@ http://www.tooplate.com/view/2098-health
                                          <button class="btn btn-success" id="old"> Old Patient</button>
                                    </div>
                               </div>
+                              @include('include._message')
   
                               {!! Form::open(['url' => '/appointments','method'=>'post',"id"=>"appointment-form","role"=>"form"]) !!}
 
