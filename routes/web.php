@@ -40,10 +40,17 @@ Route::resource('doctors', DoctorController::class);
 Route::resource('bloods', BloodController::class);
 Route::resource('patients', PatientController::class);
 Route::resource('schedules', ScheduleController::class);
+
+
 Route::resource('appointments', AppointmentController::class);
+Route::get('appointments/view/{appointment}',[AppointmentController::class,'getRequestedAppointments'])->name('appointments.requested');
+Route::get('appointments/reuested/{doctor}',[AppointmentController::class,'getRequestedAppointments'])->name('appointments.requested');
+Route::get('appointments/approve/{appointment}',[AppointmentController::class,'approveAppointments'])->name('appointments.approve');
+Route::get('appointments/approved/{doctor}',[AppointmentController::class,'getApprovedAppointments'])->name('appointments.approved');
 
 
 Route::get('/findDoctorName',[ScheduleController::class,'getDoctor']);
+Route::get('/getAppointmentDetails',[AppointmentController::class,'appointmentDetails']);
 Route::get('/checkAppointmentAvailability',[AppointmentController::class,'checkAvailability']);
 
 // Route::get('/login', [LoginController::class, 'index'])->name('login');

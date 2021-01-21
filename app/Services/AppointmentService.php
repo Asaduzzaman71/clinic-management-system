@@ -52,5 +52,34 @@ class AppointmentService{
 
         }
 
+        public function getRequestedAppointmentsByDoctorId($id){
+
+           return   Appointment::where('doctor_id', '=', $id)
+                                ->where('status','=',0)
+                                ->get();
+        }
+
+        public function approveRequestedAppointment($id){
+            return   Appointment::where('id', '=', $id)->update(['status'=>1]);
+            
+
+        }
+
+        public function getAppointmentById($appointment){
+            return   Appointment::findOrFail($appointment);
+
+        }
+        public function getDoctorId($appointment){
+             
+            
+        }
+
+        public function getApprovedAppointmentsByDoctorId($id){
+            return   Appointment::where('doctor_id', '=', $id)
+                                ->where('status','=',1)
+                                ->get();
+
+        }
+
 
 }

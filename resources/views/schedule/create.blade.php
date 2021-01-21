@@ -39,10 +39,8 @@
 	$(document).ready(function(){
 
 		$(document).on('change','.department',function(){
-			 console.log("hmm its change");
 
 			var department_id=$(this).val();
-			 console.log(department_id);
 			var div=$(this).parent();
 
 			var op=" ";
@@ -50,14 +48,10 @@
 			$.ajax({
 				type:'get',
 				url:'{!!URL::to('findDoctorName')!!}',
-            data:{'id':department_id},
-            dataType:'json',
+                data:{'id':department_id},
+                dataType:'json',
 				success:function(data){
-					console.log('success');
-
-					console.log(data);
-
-					console.log(data.length);
+		
                //op+='<option value="0" selected disabled>chose product</option>';
                $('#doctor').empty();
 					for(var i=0;i<data.length;i++){

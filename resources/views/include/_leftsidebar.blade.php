@@ -13,17 +13,19 @@
           <span class="menu-item-label">Mailbox</span>
         </a><!-- br-menu-link -->
       </li><!-- br-menu-item -->
+      @if(Auth()->user()->role_id==2)
       <li class="br-menu-item">
         <a href="#" class="br-menu-link with-sub">
           <i class="menu-item-icon icon ion-ios-photos-outline tx-20"></i>
-          <span class="menu-item-label">Department</span>
+          <span class="menu-item-label">Appointment</span>
         </a><!-- br-menu-link -->
         <ul class="br-menu-sub">
-          <li class="sub-item"><a href="card-dashboard.html" class="sub-link">Dashboard</a></li>
-          <li class="sub-item"><a href="card-social.html" class="sub-link">Blog &amp; Social Media</a></li>
+          <li class="sub-item"><a href="{{route('appointments.approved',$doctor->id)}}" class="sub-link">Approved Appointments</a></li>
+          <li class="sub-item"><a href="{{route('appointments.requested',$doctor->id)}}" class="sub-link">Requested Appointments</a></li>
           <li class="sub-item"><a href="card-listing.html" class="sub-link">Shop &amp; Listing</a></li>
         </ul>
       </li>
+      @endif
       <li class="br-menu-item">
         <a href="#" class="br-menu-link with-sub">
           <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>
@@ -72,6 +74,12 @@
         </a><!-- br-menu-link -->
       </li><!-- br-menu-item --><!-- br-menu-item -->
       <li class="br-menu-item">
+        <a href="{{route('schedules.index')}}" class="br-menu-link">
+          <i class="menu-item-icon icon ion-ios-email-outline tx-24"></i>
+          <span class="menu-item-label">Schedule</span>
+        </a><!-- br-menu-link -->
+      </li><!-- br-menu-item --><!-- br-menu-item -->
+      <li class="br-menu-item">
         <a href="{{route('patients.index')}}" class="br-menu-link">
           <i class="menu-item-icon icon ion-ios-email-outline tx-24"></i>
           <span class="menu-item-label">Patient</span>
@@ -91,13 +99,30 @@
         </a><!-- br-menu-link -->
       </li><!-- br-menu-item --><!-- br-menu-item -->
      
-      
+      @if(Auth()->user()->role_id==1)
       <li class="br-menu-item">
         <a href="{{route('admin.edit',$admin->id)}}" class="br-menu-link">
           <i class="menu-item-icon icon ion-ios-email-outline tx-24"></i>
           <span class="menu-item-label">Manage Profile</span>
         </a><!-- br-menu-link -->
       </li><!-- br-menu-item --><!-- br-menu-item -->
+      @endif
+      @if(Auth()->user()->role_id==2)
+      <li class="br-menu-item">
+        <a href="{{route('doctors.edit',$doctor->id)}}" class="br-menu-link">
+          <i class="menu-item-icon icon ion-ios-email-outline tx-24"></i>
+          <span class="menu-item-label">Manage Profile</span>
+        </a><!-- br-menu-link -->
+      </li><!-- br-menu-item --><!-- br-menu-item -->
+      @endif
+      @if(Auth()->user()->role_id==3)
+      <li class="br-menu-item">
+        <a href="{{route('patients.edit',$patient->id)}}" class="br-menu-link">
+          <i class="menu-item-icon icon ion-ios-email-outline tx-24"></i>
+          <span class="menu-item-label">Manage Profile</span>
+        </a><!-- br-menu-link -->
+      </li><!-- br-menu-item --><!-- br-menu-item -->
+      @endif
      
     </ul><!-- br-sideleft-menu -->
 

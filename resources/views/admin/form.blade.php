@@ -1,7 +1,6 @@
 <div class="row">
     {!! Form::hidden('id',$admin['id']) !!}  
     {!! Form::hidden('role_id',$admin['role_id']) !!}
-    {!! Form::hidden('password',$admin['password']) !!} 
     {!! Form::hidden('status',$admin['status']) !!}
      
     <div class="col-lg-6">
@@ -15,30 +14,35 @@
     </div><!-- col-6 -->
     <div class="col-lg-6">
       <div class="form-group">
-        {!! Form::label('email', 'Email', ['class' => 'form-control-label']);!!}
-        {!! Form::text("email", old('email',$admin->email), ["class"=>"form-control form-control-label"]) !!}
-        <span class="validation-error">{{ $errors->first("email") }}</span>
-      </div>
-    </div><!-- col-6 -->
-   
-  </div><!-- row -->
-
-  <div class="row">
-    <div class="col-lg-6">
-      <div class="form-group">
         {!! Form::label('phone', 'Phone', ['class' => 'form-control-label']);!!}
         {!! Form::text("phone", old('phone',$admin->phone), ["class"=>"form-control form-control-label"]) !!}
         <span class="validation-error">{{ $errors->first("phone") }}</span>
       </div>
     </div><!-- col-6 -->
+    
+
+   
+  </div><!-- row -->
+
+  <div class="row">
     <div class="col-lg-6">
-      <div class="form-group">
-        {!! Form::label('address', 'Address', ['class' => 'form-control-label']);!!}
-        {!! Form::text("address", old('address',$admin->address), ["class"=>"form-control form-control-label"]) !!}
-        <span class="validation-error">{{ $errors->first("address") }}</span>
-      </div>
+        <div class="form-group">
+          {!! Form::label('email', 'Email', ['class' => 'form-control-label']);!!}
+          {!! Form::text("email", old('email',$admin->email), ["class"=>"form-control form-control-label"]) !!}
+          <span class="validation-error">{{ $errors->first("email") }}</span>
+        </div>
     </div><!-- col-6 -->
    
+    <div class="col-lg-6">
+      <div class="form-group">
+
+        {!! Form::label('password','Password', ['class' => 'form-control-label']);!!}
+        {{ Form::password('password', array('id' => 'password', "class" => "form-control", "autocomplete" => "off")) }}
+        <span class="validation-error">{{ $errors->first("password") }}</span>
+        
+      </div>
+
+    </div>
   </div><!-- row -->
 
   
@@ -50,5 +54,13 @@
           <span class="validation-error">{{ $errors->first("image") }}</span>
         </div>
       </div>
+
+      <div class="col-lg-6">
+        <div class="form-group">
+          {!! Form::label('address', 'Address', ['class' => 'form-control-label']);!!}
+          {!! Form::textarea("address", old('address',$admin->address), ["class"=>"form-control form-control-label","rows"=>"5"]) !!}
+          <span class="validation-error">{{ $errors->first("address") }}</span>
+        </div>
+      </div><!-- col-6 -->
     
     </div>

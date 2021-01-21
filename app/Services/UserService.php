@@ -20,13 +20,13 @@ class UserService
         return $user->save() ? $user : null;
     }
 
-    public function updateUser($doctor)
+    public function updateUser($data)
     {   
-        $user = User::find($doctor->user_id);
-        $user->name=$doctor->name;
-        $user->password=$doctor->password;
-        $user->email=$doctor->email;
-        $user->role_id=$doctor->role_id;
+        $user = User::find($data->id);
+        $user->name=$data->name;
+        $user->password=$data->password;
+        $user->email=$data->email;
+        $user->role_id=$data->role_id;
 
        return $user->save() ? $user : null;
     }

@@ -32,7 +32,7 @@ class AdminRequest extends FormRequest
             'name'=>'required|min:3',
             'email' => 'required|email|unique:admins,email,'.$admin,
             'phone'=>'required',
-            'password'=>'nullable',
+            'password'=>'required',
             'address'=>'required',
             'image'=>'sometimes|file|image|max:5000',
             'status' => 'required|integer'
