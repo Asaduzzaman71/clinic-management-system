@@ -31,9 +31,14 @@ class UserComposer
                 $doctor = Doctor::where('user_id',$userId)->first();
                 $view->with(['doctor'=> $doctor]);
             }
-            else{
+            else if($userRole==3){
+
                 $patient = Patient::where('user_id',$userId)->first();
                 $view->with(['patient'=> $patient]);
+            }
+            else{
+                $accountant = Accountant::where('user_id',$userId)->first();
+                $view->with(['accountant'=> $accountant]);
             }
            
       

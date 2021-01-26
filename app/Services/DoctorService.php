@@ -43,6 +43,12 @@ class doctorService{
     {
         return Doctor::find($id);
     }
+
+    public function getDoctorByUserId($userId){
+        return  Doctor::where('user_id','=',$userId)->first();
+    }
+
+
     public function delete($id)
     {
         $doctor = Doctor::findOrFail($id);

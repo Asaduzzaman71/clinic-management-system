@@ -6,22 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Department extends Model
+class Test extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    
-    
     protected $guarded=[];
-
-
-    public function facilities()
-    {
-        return $this->hasMany(Post::class);
-    }
-
-    public function doctors()
-    {
-        return $this->hasMany(Doctor::class);
-    }
 }

@@ -10,6 +10,11 @@ use App\Http\Controllers\BloodController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\AccountantController;
+use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\PrescriptionController;
+use App\Http\Controllers\TestController;
+
 
 
 /*
@@ -38,15 +43,32 @@ Route::resource('departments', DepartmentController::class);
 Route::resource('facilities', FacilityController::class);
 Route::resource('doctors', DoctorController::class);
 Route::resource('bloods', BloodController::class);
-Route::resource('patients', PatientController::class);
 Route::resource('schedules', ScheduleController::class);
+Route::resource('accountants', AccountantController::class);
+Route::resource('tests', TestController::class);
+
+
+Route::resource('prescriptions', PrescriptionController::class);
+Route::get('prescriptions/doctor/{doctor}',[PrescriptionController::class,'getPrescriptionCreatedByDoctor'])->name('prescription.doctor');
+Route::get('prescriptions/patient/{patient}',[PrescriptionController::class,'getPrescriptionByPatientId'])->name('prescription.patient');
+
+
+Route::resource('patients', PatientController::class);
+Route::get('patients/liveSearch',[PatientController::class,'liveSearchPatient']);
+
+
+
+Route::resource('invoices', InvoiceController::class);
 
 
 Route::resource('appointments', AppointmentController::class);
 Route::get('appointments/view/{appointment}',[AppointmentController::class,'getRequestedAppointments'])->name('appointments.requested');
-Route::get('appointments/reuested/{doctor}',[AppointmentController::class,'getRequestedAppointments'])->name('appointments.requested');
-Route::get('appointments/approve/{appointment}',[AppointmentController::class,'approveAppointments'])->name('appointments.approve');
-Route::get('appointments/approved/{doctor}',[AppointmentController::class,'getApprovedAppointments'])->name('appointments.approved');
+Route::get('appointments/doctor//reuested/{doctor}',[AppointmentController::class,'getRequestedAppointments'])->name('appointments.requested');
+Route::get('appointments/doctor/approve/{appointment}',[AppointmentController::class,'approveAppointments'])->name('appointments.approve');
+Route::get('appointments/doctor/approved/{doctor}',[AppointmentController::class,'getApprovedAppointments'])->name('appointments.approved');
+Route::get('appointments/patient/pending/{patient}',[AppointmentController::class,'getPatientPendingAppointments'])->name('appointments.pending');
+Route::get('appointments/patient/accepted/{patient}',[AppointmentController::class,'getPatientAcceptedAppointments'])->name('appointments.accepted');
+
 
 
 Route::get('/findDoctorName',[ScheduleController::class,'getDoctor']);

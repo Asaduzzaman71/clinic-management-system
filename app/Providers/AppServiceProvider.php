@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {
+    {   
        $departments= Department::pluck('name', 'id');
        view()->share('departments',$departments);
       

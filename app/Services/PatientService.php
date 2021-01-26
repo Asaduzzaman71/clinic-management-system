@@ -66,4 +66,5 @@ class PatientService{
 
        return  Patient::where('id',$id)->update(['user_id'=>$userId]);
     }
+    
 }

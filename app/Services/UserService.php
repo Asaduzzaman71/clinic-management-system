@@ -22,7 +22,7 @@ class UserService
 
     public function updateUser($data)
     {   
-        $user = User::find($data->id);
+        $user = User::find($data->user_id);
         $user->name=$data->name;
         $user->password=$data->password;
         $user->email=$data->email;

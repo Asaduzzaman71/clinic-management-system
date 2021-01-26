@@ -1,20 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Blood;
+use App\Models\Test;
 use Illuminate\Http\Request;
-use App\Services\BloodService;
-use App\Http\Requests\BloodRequest;
+use App\Services\TestService;
+use App\Http\Requests\TestRequest;
 use Illuminate\Support\Facades\Session;
 
-class BloodController extends Controller
+class TestController extends Controller
 {
 
-    protected $bloodService;
+    protected $testService;
     public function __construct()
     {
         $this->middleware('auth');
-        $this->bloodService = new BloodService();
+        $this->testService = new TestService();
         
     }
     /**
@@ -24,8 +24,8 @@ class BloodController extends Controller
      */
     public function index()
     {
-        $bloods = $this->bloodService->bloodList();
-        return view('blood.index',compact('bloods'));
+        $tests = $this->testService->testList();
+        return view('test.index',compact('tests'));
     }
 
     /**
@@ -34,8 +34,8 @@ class BloodController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    { 
-        return view('blood.create');
+    {
+        return view('test.create');
     }
 
     /**
@@ -44,69 +44,66 @@ class BloodController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(BloodRequest $request)
+    public function store(TestRequest $request)
     {
         $validatedData = $request->validated(); 
-        $this->bloodService->createOrUpdate($validatedData);
+        $this->testService->createOrUpdate($validatedData);
         Session::flash('message','Information stored successfully!!!!');
-        return redirect()->route('bloods.index'); 
+        return redirect()->route('tests.index'); 
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Blood  $blood
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Blood $blood)
+    public function show($id)
     {
-        //
+       
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Blood  $blood
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $blood = $this->bloodService->getById($id);            
-        return view('blood.edit', compact('blood'));
+        $test = $this->testService->getById($id);            
+        return view('test.edit', compact('test'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Blood  $blood
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(BloodRequest $request, $id)
+    public function update(TestRequest $request, $id)
     {
         $validatedData = $request->validated(); 
         $validatedData['id']=$id;
-        
-        $this->bloodService->createOrUpdate($validatedData); 
+        $this->testService->createOrUpdate($validatedData); 
         Session::flash('message','Information updated successfully!!!!');
-        return redirect()->route('bloods.index');
+        return redirect()->route('tests.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Blood  $blood
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $blood = $this->bloodService->delete($id);
+        $test = $this->testService->delete($id);
        
-        if ($blood) {
+        if ($test) {
             Session::flash('message','Information deleted successfully!!!!');
             }
-        return redirect()->route('bloods.index');
-    
+        return redirect()->route('tests.index');
     }
-    
 }

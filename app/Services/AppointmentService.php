@@ -59,6 +59,19 @@ class AppointmentService{
                                 ->get();
         }
 
+        public function getPatientPendingAppointmentsByPatientId($patientId){
+            return   Appointment::where('patient_id', '=', $patientId)
+            ->where('status','=',0)
+            ->get();
+
+        }
+
+        public function getPatientApprovedAppointmentsByPatientId($patientId){
+            return   Appointment::where('patient_id', '=', $patientId)
+            ->where('status','=',0)
+            ->get();
+        }
+
         public function approveRequestedAppointment($id){
             return   Appointment::where('id', '=', $id)->update(['status'=>1]);
             
@@ -78,6 +91,11 @@ class AppointmentService{
             return   Appointment::where('doctor_id', '=', $id)
                                 ->where('status','=',1)
                                 ->get();
+
+        }
+        public function getAppointedPatientDropdownByDoctorId($doctorId){
+    
+            return Appointment::where('doctor_id',$doctorId)->pluck('name', 'patient_id');
 
         }
 

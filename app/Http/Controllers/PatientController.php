@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Patient;
-use Illuminate\Http\Request;
 use App\Http\Requests\PatientRequest;
 use App\Services\PatientService;
 use App\Services\BloodService;
@@ -143,4 +142,21 @@ class PatientController extends Controller
             }
         return redirect()->route('patients.index');
     }
+
+    public function liveSearchPatient(Request $request)
+    {
+        if ($request->name) {
+            $name = $request->name;
+            $data = Patient::where('name', 'LIKE', "%{$name}%")
+                ->get();
+            $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+            foreach ($data as $row) {
+                $output .= '
+       <li><a href="#">' . $row->medicine_name . '</a></li>';
+            }
+            $output .= '</ul>';
+            echo $output;
+        }
+    }
+
 }

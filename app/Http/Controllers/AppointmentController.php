@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Services\AppointmentService;
 use App\Services\PatientService;
 use App\Services\DoctorService;
+use App\Services\DepartmentService;
 use App\Http\Requests\AppointmentRequest;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ class AppointmentController extends Controller
     protected $appointmentService;
     protected $patientService;
     protected $doctorService;
+    protected $departmentService;
 
     public function __construct()
     {
@@ -24,6 +26,7 @@ class AppointmentController extends Controller
         $this->appointmentService = new AppointmentService();
         $this->patientService = new PatientService();
         $this->doctorService = new DoctorService();
+        $this->departmentService = new DepartmentService();
         
     }
     
@@ -35,13 +38,14 @@ class AppointmentController extends Controller
     
     public function create()
     {
-        //
+        $departments = $this->departmentService->getDropdownList();
+        return view('appointment.patient.create',compact('departments'));
     }
 
    
     public function store(AppointmentRequest $request)
     {
-
+       
         $validatedData = $request->validated();
         if($validatedData['patient_id']!=NULL){
             $patient = $this->patientService->getById($validatedData['patient_id']);
@@ -103,16 +107,7 @@ class AppointmentController extends Controller
     }
 
    
-    public function edit(Appointment $appointment)
-    {
-        //
-    }
-
-   
-    public function update(Request $request, Appointment $appointment)
-    {
-        //
-    }
+    
 
    
     public function destroy($appointmentid)
@@ -137,6 +132,17 @@ class AppointmentController extends Controller
         return view('appointment.requests',compact('appointments'));
     }
 
+    public function getPatientPendingAppointments($patient){
+ 
+        $appointments=$this->appointmentService->getPatientPendingAppointmentsByPatientId($patient);
+        return view('appointment.patient.pending',compact('appointments'));
+    }
+    public function getPatientAcceptedAppointments($patient){
+        $appointments=$this->appointmentService->getPatientApprovedAppointmentsByPatientId($patient);
+        return view('appointment.patient.approved',compact('appointments'));
+
+    }
+
     public function approveAppointments($appointment){
         $response=$this->appointmentService->approveRequestedAppointment($appointment);
         $appointment=$this->appointmentService->getAppointmentById($appointment);
@@ -154,6 +160,8 @@ class AppointmentController extends Controller
         return view('appointment.approved',compact('appointments'));
 
     }
+
+    
 
 
 
