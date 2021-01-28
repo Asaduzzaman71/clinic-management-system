@@ -11,9 +11,8 @@ class doctorService{
     public function createOrUpdate($data)
     {
           $user_id = auth()->user()->id;
-          $user_role=auth()->user()->role_id;
           $data['password']=bcrypt($data['password']);
-          $data['role_id']=$user_role;
+          
 
           //doctor data will be updated if we get doctor id from the form request
           if(!empty($data["id"])){

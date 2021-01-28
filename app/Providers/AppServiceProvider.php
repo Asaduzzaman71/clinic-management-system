@@ -5,6 +5,7 @@ use App\Models\Department;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Pagination\Paginator;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -24,8 +25,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {   
-       $departments= Department::pluck('name', 'id');
-       view()->share('departments',$departments);
+        Paginator::useBootstrap();
+        $departments= Department::pluck('name', 'id');
+        view()->share('departments',$departments);
       
     }
 }

@@ -6,7 +6,7 @@ class TestService{
 
 
     public function TestList(){
-        return Test::latest()->get();
+        return Test::paginate(2);
     }
     public function createOrUpdate($data)
     {

@@ -34,7 +34,9 @@
 
 
         </thead>   
-     <tbody>   
+     <tbody> 
+      @if(!empty($tests) && $tests->count())
+            
         @foreach($tests as $test)
           <tr>
               
@@ -60,12 +62,23 @@
               </td>
           </tr>
           @endforeach
-        </tbody>
-    </table>  
-    </div><!-- table-wrapper -->
-        
+          
+          @else
+          <tr>
+            <td style="text-align: center" colspan="4" >No data available</td>
 
+          </tr>
+          @endif
+
+        </tbody>
+        
+    </table>
+   
+    </div><!-- table-wrapper -->
+    {!!$tests->links() !!}  
+   
   </div>
+  
 </div>
 
                       

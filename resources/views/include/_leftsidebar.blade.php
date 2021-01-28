@@ -7,6 +7,14 @@
           <span class="menu-item-label">Dashboard</span>
         </a><!-- br-menu-link -->
       </li><!-- br-menu-item -->
+
+      <li class="br-menu-item">
+        <a href="{{ route('tests.index') }}" class="br-menu-link">
+          <i class="menu-item-icon icon ion-ios-home-outline tx-24"></i>
+          <span class="menu-item-label">Test</span>
+        </a><!-- br-menu-link -->
+      </li><!-- br-menu-item -->
+      
       @if(Auth()->user()->role_id==2)
       <li class="br-menu-item">
         <a href="{{route('prescription.doctor',$doctor->id)}}" class="br-menu-link">
@@ -34,7 +42,7 @@
         <ul class="br-menu-sub">
           <li class="sub-item"><a href="{{route('appointments.approved',$doctor->id)}}" class="sub-link">Approved Appointments</a></li>
           <li class="sub-item"><a href="{{route('appointments.requested',$doctor->id)}}" class="sub-link">Requested Appointments</a></li>
-          <li class="sub-item"><a href="card-listing.html" class="sub-link">Shop &amp; Listing</a></li>
+          
         </ul>
       </li>
       @endif
@@ -45,7 +53,7 @@
           <span class="menu-item-label">Appointment</span>
         </a><!-- br-menu-link -->
         <ul class="br-menu-sub">
-          <li class="sub-item"><a href="{{route('appointments.accepted',$patient->id)}}" class="sub-link">Approved Appointments</a></li>
+          <li class="sub-item"><a href="{{route('appointments.accepted',$patient->id)}}" class="sub-link">Accepted Appointments</a></li>
           <li class="sub-item"><a href="{{route('appointments.pending',$patient->id)}}" class="sub-link">Requested Appointments</a></li>
           <li class="sub-item"><a href="card-listing.html" class="sub-link">Shop &amp; Listing</a></li>
         </ul>

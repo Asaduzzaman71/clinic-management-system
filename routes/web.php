@@ -14,6 +14,7 @@ use App\Http\Controllers\AccountantController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\DiagnosisReportController;
 
 
 
@@ -47,6 +48,9 @@ Route::resource('schedules', ScheduleController::class);
 Route::resource('accountants', AccountantController::class);
 Route::resource('tests', TestController::class);
 
+Route::resource('diagnosisReports', DiagnosisReportController::class);
+Route::get('diagnosisReports/createReport/{prescription}',[DiagnosisReportController::class,'createReport'])->name('diagnosis.report.create');
+Route::get('diagnosisReports/download/{diagnosisReport}',[DiagnosisReportController::class,'download'])->name('diagnosis.report.download');
 
 Route::resource('prescriptions', PrescriptionController::class);
 Route::get('prescriptions/doctor/{doctor}',[PrescriptionController::class,'getPrescriptionCreatedByDoctor'])->name('prescription.doctor');

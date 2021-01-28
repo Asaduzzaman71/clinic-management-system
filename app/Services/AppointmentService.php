@@ -68,7 +68,7 @@ class AppointmentService{
 
         public function getPatientApprovedAppointmentsByPatientId($patientId){
             return   Appointment::where('patient_id', '=', $patientId)
-            ->where('status','=',0)
+            ->where('status','=',1)
             ->get();
         }
 
