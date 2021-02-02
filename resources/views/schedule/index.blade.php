@@ -65,7 +65,9 @@
         </tbody>
     </table>  
     </div><!-- table-wrapper -->
-        
+    <div class="d-flex justify-content-center">
+      {!! $schedules->links() !!}
+  </div>
 
   </div>
 </div>

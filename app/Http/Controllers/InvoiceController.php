@@ -82,4 +82,10 @@ class InvoiceController extends Controller
     {
         //
     }
+
+    public function invoiceEntryAdd(Request $request){
+
+        dd($request);
+
+    }
 }

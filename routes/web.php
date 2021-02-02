@@ -14,6 +14,7 @@ use App\Http\Controllers\AccountantController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DiagnosisReportController;
 
 
@@ -58,11 +59,13 @@ Route::get('prescriptions/patient/{patient}',[PrescriptionController::class,'get
 
 
 Route::resource('patients', PatientController::class);
-Route::get('patients/liveSearch',[PatientController::class,'liveSearchPatient']);
+Route::get('/liveSearch',[PatientController::class,'liveSearchPatient'])->name('liveSearch');
+Route::get('/patientSearch',[PatientController::class,'searchPatient'])->name('patientSearch');
 
 
 
 Route::resource('invoices', InvoiceController::class);
+Route::post('/invoices/entry/add',[InvoiceController::class,'invoiceEntryAdd'])->name('invoice.entry.add');
 
 
 Route::resource('appointments', AppointmentController::class);
@@ -75,7 +78,9 @@ Route::get('appointments/patient/accepted/{patient}',[AppointmentController::cla
 
 
 
+Route::get('/findDoctorDropdownList',[HomeController::class,'getDoctor']);
 Route::get('/findDoctorName',[ScheduleController::class,'getDoctor']);
+
 Route::get('/getAppointmentDetails',[AppointmentController::class,'appointmentDetails']);
 Route::get('/checkAppointmentAvailability',[AppointmentController::class,'checkAvailability']);
 

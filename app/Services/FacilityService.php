@@ -6,7 +6,7 @@ class FacilityService{
 
 
     public function facilityList(){
-        return Facility::latest()->get();
+        return Facility::latest()->paginate(2);
     }
     public function createOrUpdate($data)
     {

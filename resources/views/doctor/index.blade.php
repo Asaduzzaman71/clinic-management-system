@@ -70,7 +70,9 @@
         </tbody>
     </table>  
     </div><!-- table-wrapper -->
-        
+    <div class="d-flex justify-content-center">
+      {!! $doctors->links() !!}
+  </div>
 
   </div>
 </div>

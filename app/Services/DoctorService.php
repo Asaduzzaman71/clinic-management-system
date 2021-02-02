@@ -6,7 +6,7 @@ class doctorService{
 
 
     public function doctorList(){
-        return Doctor::latest()->get();
+        return Doctor::latest()->paginate(2);
     }
     public function createOrUpdate($data)
     {
@@ -23,8 +23,8 @@ class doctorService{
                 if (isset($data['image'])){
                     if (file_exists($doctor->image)) 
                     { 
-                        $oldFile=$doctor->image;
-                        Storage::delete($oldFile);
+                        $filePath = public_path($doctor->image);
+                        unlink($filePath);
                     }
                     
                 }
@@ -57,7 +57,7 @@ class doctorService{
                         Storage::delete($doctor->image);
                     }
         }
-        $doctor->delete();
+        $doctor->forceDelete();
         return $doctor;
 
     }

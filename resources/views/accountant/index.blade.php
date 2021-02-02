@@ -59,6 +59,9 @@
         </tbody>
     </table>  
     </div><!-- table-wrapper -->
+    <div class="d-flex justify-content-center">
+      {!! $departments->links() !!}
+  </div>
         
 
   </div>

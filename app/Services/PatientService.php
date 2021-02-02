@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Storage;
 class PatientService{
 
     public function patientList(){
-        return Patient::latest()->get();
+        return Patient::latest()->paginate(2);
     }
     public function createOrUpdate($data)
     {
@@ -23,8 +23,8 @@ class PatientService{
                 if (isset($data['image'])){
                     if (file_exists($patient->image)) 
                     { 
-                        $oldFile=$patient->image;
-                        Storage::delete($oldFile);
+                        $filePath = public_path($patient->image);
+                        unlink($filePath);
                     }
                     
                 }
@@ -51,7 +51,7 @@ class PatientService{
                         Storage::delete($patient->image);
                     }
         }
-        $patient->delete();
+        $patient->forceDelete();
         return $patient;
 
     }

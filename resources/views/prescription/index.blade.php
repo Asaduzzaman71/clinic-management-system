@@ -76,7 +76,9 @@
     </table>  
     </div><!-- table-wrapper -->
         
-
+    <div class="d-flex justify-content-center">
+      {!! $prescriptions->links() !!}
+  </div>
   </div>
 </div>
 

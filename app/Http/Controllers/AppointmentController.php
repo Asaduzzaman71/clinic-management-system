@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 
 
+
 class AppointmentController extends Controller
 {
     protected $appointmentService;
@@ -22,7 +23,7 @@ class AppointmentController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+      
         $this->appointmentService = new AppointmentService();
         $this->patientService = new PatientService();
         $this->doctorService = new DoctorService();
@@ -75,21 +76,37 @@ class AppointmentController extends Controller
             if($appointmentsOnThatDay<$appointment->total_patient){
                 $response=$this->appointmentService->create($validatedData);
                 if(is_null($response)===false){
-                    $message = "Appointment request has been taken successfully...";
-                    session()->flash("message", $message);
+                   // $message = "Appointment request has been taken successfully...";
+                    // $notification = array(
+                    //     'message' => 'Appointment request has been taken successfully!',
+                    //     'alert-type' => 'success'
+                    // );
+                    session()->flash("success", "Appointment request has been taken successfully...");
                     return redirect()->back();
+                    //return redirect()->back()->with($notification);
                 }
 
             }
             else{
-                Session::flash('failedMessage',"Sorry !We can't take no more appointment for today  ");
+                Session::flash('error',"Sorry !We can't take no more appointment for today  ");
                 return redirect()->back();
+                // $notification = array(
+                //     'message' => "Sorry !We can't take no more appointment for today ",
+                //     'alert-type' => 'info'
+                // );
+                //return redirect()->back()->with($notification);
+                //
             }
 
         }
         else{
-            Session::flash('failedMessage','Sorry!!!Doctor has no appointment on that day');
+            Session::flash('error','Sorry!!!Doctor has no appointment on that day');
             return redirect()->back();
+            // $notification = array(
+            //     'message' => "Sorry!!!Doctor has no appointment on that day",
+            //     'alert-type' => 'success'
+            // );
+            //return redirect()->back()->with($notification);
         }
        
        

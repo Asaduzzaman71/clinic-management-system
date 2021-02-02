@@ -5,7 +5,7 @@ class ScheduleService{
 
 
     public function scheduleList(){
-        return Schedule::latest()->get();
+        return Schedule::latest()->paginate(2);
     }
     public function createOrUpdate($data)
     {

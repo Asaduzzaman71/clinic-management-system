@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Http\Request;
 use App\Models\Patient;
 use App\Http\Requests\PatientRequest;
 use App\Services\PatientService;
@@ -145,18 +145,30 @@ class PatientController extends Controller
 
     public function liveSearchPatient(Request $request)
     {
-        if ($request->name) {
-            $name = $request->name;
-            $data = Patient::where('name', 'LIKE', "%{$name}%")
+       
+        if($request->ajax()) {
+            $data =Patient::Where('name','LIKE','%'.$request->name.'%')
                 ->get();
-            $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
-            foreach ($data as $row) {
-                $output .= '
-       <li><a href="#">' . $row->medicine_name . '</a></li>';
+            $output = '';
+            if (count($data)>0) {
+              
+                $output = '<ul class="list-group" style="display: block; position: relative; z-index: 1">';
+                foreach ($data as $row){   
+                    $output .= '<li class="list-group-item">'.$row->name.'</li>';
+                }
+                $output .= '</ul>';
             }
-            $output .= '</ul>';
-            echo $output;
+            else {
+                $output .= '<li class="list-group-item">'.'No results'.'</li>';
+            }
+            return $output;
         }
     }
 
+    public function searchPatient(Request $request){
+        
+            $data =Patient::Where('name',$request->name)
+                ->first(); 
+            return response()->json($data);
+    }
 }

@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Storage;
 class AccountantService{
 
     public function accountantList(){
-        return Accountant::latest()->get();
+        return Accountant::latest()->paginate(10);
     }
     public function createOrUpdate($data)
     {
@@ -49,7 +49,7 @@ class AccountantService{
                         Storage::delete($accountant->image);
                     }
         }
-        $accountant->delete();
+        $accountant->forceDelete();
         return $accountant;
 
     }

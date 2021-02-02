@@ -9,14 +9,18 @@ class AppointmentService{
 
 
     public function appointmentList(){
-        return Appointment::latest()->get();
+        return Appointment::latest()->paginate(10);
     }
     public function create($data){
             $appointment = new Appointment();
-            if(Auth()->user()->id){
+            if(Auth()->user()){
 
                 $appointment->created_by = Auth()->user()->id;
             }
+            else{
+                $appointment->created_by =NULL;
+            }
+           
             return $appointment->fill($data)->save() ? $appointment : null;
                
       }

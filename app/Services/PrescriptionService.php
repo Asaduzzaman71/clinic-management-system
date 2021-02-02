@@ -7,13 +7,13 @@ class PrescriptionService{
   public function getPrescriptionListByDoctorId($id){
         return Prescription::where('doctor_id', '=', $id)
                             ->where('status','=',1)
-                            ->paginate(15);
+                            ->paginate(10);
     }
 
     public function getPrescriptionListByPatientId($id){
         return Prescription::where('patient_id', '=', $id)
         ->where('status','=',1)
-        ->paginate(15);
+        ->paginate(10);
     }
 
     public function createOrUpdate($data)

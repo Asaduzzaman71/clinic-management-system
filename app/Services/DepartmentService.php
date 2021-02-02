@@ -6,7 +6,7 @@ class DepartmentService{
 
 
     public function departmentList(){
-        return Department::latest()->get();
+        return Department::latest()->paginate(2);
     }
     public function createOrUpdate($data)
     {
@@ -20,8 +20,8 @@ class DepartmentService{
                 if (isset($data['icon'])){
                     if (file_exists($department->icon)) 
                     { 
-                        $oldFile=$department->icon;
-                        Storage::delete($oldFile);
+                        $filePath = public_path($department->icon);
+                        unlink($filePath);
                     }
                     
                 }

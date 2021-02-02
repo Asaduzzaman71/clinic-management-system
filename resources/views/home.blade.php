@@ -25,7 +25,9 @@ http://www.tooplate.com/view/2098-health
 
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="{{asset('assets/frontend/css/tooplate-style.css')}}">
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+     <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css"> 
+
+     
 </head>
 <body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
 
@@ -343,8 +345,8 @@ http://www.tooplate.com/view/2098-health
                                          <button class="btn btn-success" id="old"> Old Patient</button>
                                    </div>
                               </div>
-                              @include('include._message')
-  
+                              
+                           
                               {!! Form::open(['url' => '/appointments','method'=>'post',"id"=>"appointment-form","role"=>"form"]) !!}
 
                               <div class="wow fadeInUp " data-wow-delay="0.8s">
@@ -358,7 +360,7 @@ http://www.tooplate.com/view/2098-health
                                    <div class="col-md-6 col-sm-6 "  id="name">
                                         
                                         {!! Form::label('name','Name', ['class' => 'form-control-label']);!!}
-                                        {!! Form::text("name",null, ["class"=>"form-control ","placeholder"=>"Your Name"]) !!}
+                                        {!! Form::text("name",null, ["class"=>"form-control ","placeholder"=>"Your Name",]) !!}
                                         <span class="validation-error">{{ $errors->first("name") }}</span>
                                    </div>
 
@@ -379,7 +381,7 @@ http://www.tooplate.com/view/2098-health
 
                                    <div class="col-md-6 col-sm-6">
                                         {!! Form::label('department_id', 'Select Department', ['class' => 'form-control-label']);!!}
-                                        {!! Form::select('department_id', $departments ,  null , ['placeholder' => 'Select Department',"class"=>"form-control department",'id'=>'department']) !!}
+                                        {!! Form::select('department_id', $departments ,  null , ['placeholder' => 'Select Department',"class"=>"form-control department",'id'=>'department','required' => 'required']) !!}
                                         <span class="validation-error">{{ $errors->first("department_id") }}</span>
                                    </div>
                                    <div class="col-md-6 col-sm-6">
@@ -391,13 +393,13 @@ http://www.tooplate.com/view/2098-health
                                    </div>
                                    <div class="col-md-6 col-sm-6">
                                         {!! Form::label('date','Date:', ['class' => 'form-control-label']);!!}
-                                        {!! Form::date("date",NULL, ["class"=>"form-control","placeholder"=>"Your Email","id"=>"date"]) !!}
+                                        {!! Form::date("date",NULL, ["class"=>"form-control","placeholder"=>"Your Email","id"=>"date",'required' => 'required']) !!}
                                         <span class="validation-error">{{ $errors->first("date") }}</span>
                                    </div>
 
                                    <div class="col-md-12 col-sm-12">
                                         {!! Form::label('message', 'Message', ['class' => 'form-control-label']);!!}
-                                        {!! Form::textarea('message', null, ['class' => 'form-control','id'=>'message','rows'=>5]) !!}
+                                        {!! Form::textarea('message', null, ['class' => 'form-control','id'=>'message','rows'=>5,'required' => 'required']) !!}
                                         <span class="validation-error">{{ $errors->first("messgae") }}</span>
                                         {!! Form::hidden('status',0) !!}
                                        
@@ -512,7 +514,36 @@ http://www.tooplate.com/view/2098-health
 
      <!-- SCRIPTS -->
      
-   
+     <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+     <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+
+
+
+<script>
+
+
+  @if(Session::has('success'))
+            toastr.success("{{ Session::get('success') }}");
+  @endif
+
+
+  @if(Session::has('info'))
+            toastr.info("{{ Session::get('info') }}");
+  @endif
+
+
+  @if(Session::has('warning'))
+            toastr.warning("{{ Session::get('warning') }}");
+  @endif
+
+
+  @if(Session::has('error'))
+            toastr.error("{{ Session::get('error') }}");
+  @endif
+
+
+</script>
+
 
      <script>
           $(document).ready(function(){
@@ -543,31 +574,40 @@ http://www.tooplate.com/view/2098-health
                     var op=" ";
                     $.ajax({
                          type:'get',
-                         url:'{!!URL::to('findDoctorName')!!}',
+                         url:'{!!URL::to('findDoctorDropdownList')!!}',
                          data:{'id':department_id},
                          dataType:'json',
                               success:function(data){
-                                   
-                              //op+='<option value="0" selected disabled>chose product</option>';
-                              $('#doctor').empty();
-                                        for(var i=0;i<data.length;i++){
+                                   $('#doctor').empty();
+                                   for(var i=0;i<data.length;i++){
                                         op+='<option value="'+data[i].id+'">'+data[i].name+'</option>';
-                                   }
-                              $("#doctor").append(op); 
-                                   // div.find('.doctor').html(" ");
-                                   // div.find('.doctor').append(op);
-                                   },
-                                   error:function(){
-                              $('#doctor').empty();
-               
-                         }
+                                      }
+                                   $("#doctor").append(op); 
+                              },
+                              error:function(){
+                                    $('#doctor').empty();
+                             }
+                         });
                     });
-               });
-     
           });
      </script>
 
-{{-- <script type="text/javascript">
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
+     <script>
+          @if(Session::has('message'))
+           toastr.success(Session::get('message'))
+          @endif
+     </script> --}}
+    
+     <script src="{{asset('assets/frontend/js/jquery.js')}}"></script>
+     <script src="{{asset('assets/frontend/js/bootstrap.min.js')}}"></script>
+     <script src="{{asset('assets/frontend/js/jquery.sticky.js')}}"></script>
+     <script src="{{asset('assets/frontend/js/jquery.stellar.min.js')}}"></script>
+     <script src="{{asset('assets/frontend/js/wow.min.js')}}"></script>
+     <script src="{{asset('assets/frontend/js/smoothscroll.js')}}"></script>
+     <script src="{{asset('assets/frontend/js/owl.carousel.min.js')}}"></script>
+     <script src="{{asset('assets/frontend/js/custom.js')}}"></script>
+     {{-- <script type="text/javascript">
      $(document).ready(function(){
 
           $('#date').change(function(){
@@ -598,16 +638,6 @@ http://www.tooplate.com/view/2098-health
      });
 </script> --}}
 
-
-    
-     <script src="{{asset('assets/frontend/js/jquery.js')}}"></script>
-     <script src="{{asset('assets/frontend/js/bootstrap.min.js')}}"></script>
-     <script src="{{asset('assets/frontend/js/jquery.sticky.js')}}"></script>
-     <script src="{{asset('assets/frontend/js/jquery.stellar.min.js')}}"></script>
-     <script src="{{asset('assets/frontend/js/wow.min.js')}}"></script>
-     <script src="{{asset('assets/frontend/js/smoothscroll.js')}}"></script>
-     <script src="{{asset('assets/frontend/js/owl.carousel.min.js')}}"></script>
-     <script src="{{asset('assets/frontend/js/custom.js')}}"></script>
 
 </body>
 </html>

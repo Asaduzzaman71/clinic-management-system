@@ -66,7 +66,9 @@
     </table>  
     </div><!-- table-wrapper -->
         
-
+    <div class="d-flex justify-content-center">
+      {!! $facilities->links() !!}
+  </div>
   </div>
 </div>
 
