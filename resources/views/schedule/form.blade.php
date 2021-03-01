@@ -6,8 +6,8 @@
   <div class="col-lg-6">
       <div class="form-group">
         <div class="form-group">
-          {!! Form::label('department_id', 'Select a day', ['class' => 'form-control-label']);!!}
-          {!! Form::select('department_id', $departments ,  null , ['placeholder' => 'Select Day',"class"=>"form-control department",'id'=>'department']) !!}
+          {!! Form::label('department_id', 'Select department', ['class' => 'form-control-label']);!!}
+          {!! Form::select('department_id', $departments ,  null , ['placeholder' => 'Select department',"class"=>"form-control department",'id'=>'department']) !!}
         </div>
          
           <span class="validation-error">{{ $errors->first("department_id") }}</span>

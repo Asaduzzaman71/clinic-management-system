@@ -57,7 +57,7 @@ class doctorService{
                         Storage::delete($doctor->image);
                     }
         }
-        $doctor->forceDelete();
+        $doctor->Delete();
         return $doctor;
 
     }

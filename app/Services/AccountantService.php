@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Storage;
 class AccountantService{
 
     public function accountantList(){
-        return Accountant::latest()->paginate(10);
+        return Accountant::paginate(2);
     }
     public function createOrUpdate($data)
     {
@@ -61,7 +61,56 @@ class AccountantService{
 
     public function userIdUpdate($id,$userId)
     {
-
        return  Accountant::where('id',$id)->update(['user_id'=>$userId]);
     }
+
+    // function action(Request $request)
+    // {
+    //  if($request->ajax())
+    //  {
+    //   $output = '';
+    //   $query = $request->get('query');
+    //   if($query != '')
+    //   {
+    //    $data = Accountant::where('name', 'like', '%'.$query.'%')
+    //      ->orderBy('id', 'desc')
+    //      ->get();
+         
+    //   }
+    //   else
+    //   {
+    //    $data = Accountant::orderBy('CustomerID', 'desc')->get();
+    //   }
+    //   $total_row = $data->count();
+    //   if($total_row > 0)
+    //   {
+    //    foreach($data as $row)
+    //    {
+    //         $output .= '
+    //                 <tr>
+    //                 <td>'.$row->name.'</td>
+    //                 <td>'.$row->email.'</td>
+    //                 <td>'.$row->mobile.'</td>
+    //                 <td>'.$row->PostalCode.'</td>
+    //                 <td>'.$row->Country.'</td>
+    //                 </tr>
+    //                 ';
+    //     }
+    //   }
+    //   else
+    //   {
+    //    $output = '
+    //    <tr>
+    //     <td align="center" colspan="5">No Data Found</td>
+    //    </tr>
+    //    ';
+    //   }
+    //   $data = array(
+    //    'table_data'  => $output,
+    //    'total_data'  => $total_row
+    //   );
+
+    //   echo json_encode($data);
+    //  }
+    // }
 }

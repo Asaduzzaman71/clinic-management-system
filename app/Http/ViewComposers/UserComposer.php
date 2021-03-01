@@ -6,6 +6,8 @@ use Illuminate\View\View;
 use App\Models\Admin;
 use App\Models\Doctor;
 use App\Models\Patient;
+use App\Models\Laboratorist;
+use App\Models\Accountant;
 
 class UserComposer
 {
@@ -36,9 +38,13 @@ class UserComposer
                 $patient = Patient::where('user_id',$userId)->first();
                 $view->with(['patient'=> $patient]);
             }
-            else{
+            elseif($userRole==4){
                 $accountant = Accountant::where('user_id',$userId)->first();
                 $view->with(['accountant'=> $accountant]);
+            }
+            else{
+                $laboratorist = Laboratorist::where('user_id',$userId)->first();
+                $view->with(['laboratorist'=> $laboratorist]);
             }
            
       

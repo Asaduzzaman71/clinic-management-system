@@ -18,7 +18,7 @@ class ScheduleService{
           }
           else{
                 //create
-                $schedule = new schedule();
+                $schedule = new Schedule();
                 $schedule->created_by = $user_id;
               }
 
@@ -27,11 +27,11 @@ class ScheduleService{
 
     public function getById($id)
     {
-        return schedule::find($id);
+        return Schedule::find($id);
     }
     public function delete($id)
     {
-        $schedule = schedule::findOrFail($id);
+        $schedule = Schedule::findOrFail($id);
         $schedule->delete();
         return $schedule;
 

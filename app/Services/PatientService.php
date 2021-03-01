@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Storage;
 class PatientService{
 
     public function patientList(){
-        return Patient::latest()->paginate(2);
+        return Patient::latest()->paginate(10);
     }
     public function createOrUpdate($data)
     {

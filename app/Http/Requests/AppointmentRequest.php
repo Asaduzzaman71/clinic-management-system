@@ -28,7 +28,7 @@ class AppointmentRequest extends FormRequest
             'patient_id'=>'Nullable|integer',
             'name' => 'Nullable|max:255',
             'email' => 'Nullable|email',
-            'mobile'=>'Nullable|integer',
+            'mobile'=>'Nullable',
             'department_id'=>'required|integer',
             'doctor_id' => 'required|integer',
             'date'=>'required|after:yesterday',

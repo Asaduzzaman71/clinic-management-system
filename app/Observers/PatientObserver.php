@@ -10,10 +10,11 @@ class PatientObserver
 
     public function deleting(Patient $patient)
     {
-        //$patient->prescriptions()->DiagnosisReport()->forcedelete();
-        $patient->prescriptions()->delete();
-        $patient->appointments()->delete();
+        
         $patient->user()->forcedelete();
+        //$patient->prescriptions()->DiagnosisReport()->forcedelete();
+        // $patient->prescriptions()->delete();
+        // $patient->appointments()->delete();
        
     }
     /**

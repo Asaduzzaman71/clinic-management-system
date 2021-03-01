@@ -8,6 +8,10 @@ use App\Models\Patient;
 use App\Observers\PatientObserver;
 use App\Models\Prescription;
 use App\Observers\PrescriptionObserver;
+use App\Models\Laboratorist;
+use App\Observers\LaboratoristObserver;
+use App\Models\Accountant;
+use App\Observers\AccountantObserver;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -34,6 +38,9 @@ class AppServiceProvider extends ServiceProvider
         Doctor::observe(DoctorObserver::class); 
         Patient::observe(PatientObserver::class);
         Prescription::observe(PrescriptionObserver::class);
+        Laboratorist::observe(LaboratoristObserver::class);
+        Accountant::observe(AccountantObserver::class);
+
 
         
         Paginator::useBootstrap();

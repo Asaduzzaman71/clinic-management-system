@@ -15,4 +15,12 @@ class Blood extends Model
     {
         return $this->hasMany(Patient::class);
     }
+    public function bloodDonors()
+    {
+        return $this->hasMany(BloodDonor::class);
+    }
+    public function bloodBank()
+    {
+        return $this->hasOne(BloodBank::class);
+    }
 }

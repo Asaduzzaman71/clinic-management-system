@@ -7,15 +7,19 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\BloodController;
+use App\Http\Controllers\BloodDonorController;
+use App\Http\Controllers\BloodBankController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AccountantController;
+use App\Http\Controllers\LaboratoristController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DiagnosisReportController;
+use App\Http\Controllers\SettingController;
 
 
 
@@ -31,6 +35,7 @@ use App\Http\Controllers\DiagnosisReportController;
 */
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/doctor/details/{doctor}', [App\Http\Controllers\HomeController::class, 'doctorDetails'])->name('doctor.details');
 Auth::routes();
 Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
@@ -43,11 +48,24 @@ Route::get('/admin/{admin}', [AdminController::class,'show'])->name('admin.show'
 
 Route::resource('departments', DepartmentController::class);
 Route::resource('facilities', FacilityController::class);
+
+
 Route::resource('doctors', DoctorController::class);
+Route::get('/doctor/liveSearch',[DoctorController::class,'liveSearchDoctor'])->name('search.doctor');
+
 Route::resource('bloods', BloodController::class);
 Route::resource('schedules', ScheduleController::class);
+
 Route::resource('accountants', AccountantController::class);
+Route::get('/accountant/liveSearch',[AccountantController::class,'liveSearchAccountant'])->name('search.accountant');
+
+Route::resource('laboratorists', LaboratoristController::class);
+Route::get('/laboratorist/liveSearch',[LaboratoristController::class,'liveSearchLaboratorist'])->name('search.laboratorist');
+
+Route::resource('bloodDonors', BloodDonorController::class);
+Route::resource('bloodBanks', BloodBankController::class);
 Route::resource('tests', TestController::class);
+Route::resource('settings', SettingController::class);
 
 Route::resource('diagnosisReports', DiagnosisReportController::class);
 Route::get('diagnosisReports/createReport/{prescription}',[DiagnosisReportController::class,'createReport'])->name('diagnosis.report.create');
@@ -61,16 +79,19 @@ Route::get('prescriptions/patient/{patient}',[PrescriptionController::class,'get
 Route::resource('patients', PatientController::class);
 Route::get('/liveSearch',[PatientController::class,'liveSearchPatient'])->name('liveSearch');
 Route::get('/patientSearch',[PatientController::class,'searchPatient'])->name('patientSearch');
+Route::post('/patient/live-search',[PatientController::class,'liveSearchPatientInformation'])->name('search.patient');
 
 
 
 Route::resource('invoices', InvoiceController::class);
 Route::post('/invoices/entry/add',[InvoiceController::class,'invoiceEntryAdd'])->name('invoice.entry.add');
+Route::get('/invoices/entry/delete/{rowId}',[InvoiceController::class,'invoiceEntrydelete'])->name('invoice.entry.delete');
+
 
 
 Route::resource('appointments', AppointmentController::class);
 Route::get('appointments/view/{appointment}',[AppointmentController::class,'getRequestedAppointments'])->name('appointments.requested');
-Route::get('appointments/doctor//reuested/{doctor}',[AppointmentController::class,'getRequestedAppointments'])->name('appointments.requested');
+Route::get('appointments/doctor/reuested/{doctor}',[AppointmentController::class,'getRequestedAppointments'])->name('appointments.requested');
 Route::get('appointments/doctor/approve/{appointment}',[AppointmentController::class,'approveAppointments'])->name('appointments.approve');
 Route::get('appointments/doctor/approved/{doctor}',[AppointmentController::class,'getApprovedAppointments'])->name('appointments.approved');
 Route::get('appointments/patient/pending/{patient}',[AppointmentController::class,'getPatientPendingAppointments'])->name('appointments.pending');

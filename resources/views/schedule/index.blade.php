@@ -48,7 +48,14 @@
               <td class="center">{{$schedule->starting_time}}</td>
               <td class="center">{{$schedule->ending_time}}</td>
               <td class="center">{{$schedule->total_patient}}</td>
-              <td class="center">{{$schedule->status}}</td>
+              <td class="center"> 
+                @if($schedule->status==1)
+                   <span class="badge badge-success">Active</span>
+                @elseif($schedule->status==0)
+                    <span class="label label-danger">Deactive</span>
+                @endif
+                 
+              </td>
                        
               <td class="center">
                  

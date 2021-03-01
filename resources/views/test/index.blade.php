@@ -26,6 +26,7 @@
     <table class="table table-bordered table-colored table-dark">
       <thead class="thead-colored thead-dark">
             <tr>
+                <th>Test Id</th>
                 <th>Test Name</th>
                 <th>Description</th>
                 <th>status</th>
@@ -39,15 +40,15 @@
             
         @foreach($tests as $test)
           <tr>
-              
+            <td class="center">{{$test->id}}</td>
               <td class="center">{{$test->name}}</td>
               <td class="center">{!! $test->description !!}</td>
               <td class="center">
                 @if($test->status==1)
-                    <button class="btn btn-success" disabled>Active</button>
-                @else
-                    <button class="btn btn-danger" disabled>Inactive</button>
-                @endif
+                <span class="badge badge-success">Active</span>
+                 @else
+                 <span class="label label-danger">Deactive</span>
+               @endif
                 
             </td>
               <td class="center">

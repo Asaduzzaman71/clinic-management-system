@@ -24,4 +24,12 @@ class Department extends Model
     {
         return $this->hasMany(Doctor::class);
     }
+    public function getStatusAttribute($value)
+    {
+        return [
+            1 => 'Active',
+            0 => 'Inactive',
+        ][$value];
+    }
+
 }

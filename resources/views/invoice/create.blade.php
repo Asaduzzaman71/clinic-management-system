@@ -4,6 +4,19 @@
     .fontColor{
         color:black
     }
+    .td{
+        
+         padding-right: 15px;
+         
+
+    }
+    .td2{
+        
+        padding-left: 10px;
+        
+
+   }
+  
 </style>
 @endsection
 
@@ -12,19 +25,13 @@
     <div class="br-pagebody">
         <div class="br-section-wrapper" style="margin-left: 0px">
 
-            @if(Session::has('message'))
-                <div class="alert alert-danger" role="alert">
-                    <strong></strong>{{Session::get('message')}}
-                </div>
-            @endif
-
             <div class="row">
-                <h5 style="color: black">Point Of Sale</h5>
+                <h5 style="color: black">Create Invoice</h5>
 
             </div>
             <hr>
-
-            <div class="form-layout form-layout-1" style="margin-left: -20px">
+            @include('include._message')
+            
                 <form action="">
                     @csrf
                     <div class="row">
@@ -35,144 +42,91 @@
                                        value="" >
                                 <div id="patient_list">
                                 </div>
-
-                               
                             </div>
                         </div>
 
                     </div>
                 </form>
-
-                <br>
-                <br>
+           
+            <br>
+    
+            <div class="form-layout form-layout-1">
                 <div class="row">
-                    <div class="col-lg-4">
-                        <form id="product" action="{{ route('invoice.entry.add') }}" method="post">
-                            @csrf
-                            <table class="table table-bordered table-colored table-dark" id="memo">
-                                <tbody>
-                                    <tr>
-                                        <th class="wd-10p">Patient Id</th>
-                                        <td id="patient_id"></td>    
-                                    </tr>
-                                    <tr>
-                                        <th class="wd-10p">Patient Name</th>
-                                        <td id="patient_name"></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="wd-10p">Invoice Entry</th>
-                                        <td id="invoiceEntry">
-                                            <input class="form-control" type="text"
-                                            name="invoiceEntry" value="{{old('invoiceEntry')}}" placeholder="Description">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th class="wd-10p">Amount</th>
-                                        <td id="amount">
-                                            <input class="form-control" type="number" min="1" id="amount" name="amount" value="{{old('amount')}}" placeholder="Amount">
-                                        </td>
-                                    </tr>
-                        
-                                </tbody>
-                            </table>
-                            <input type="hidden" name="patientId" id="patientId">
-                            <input type="submit" id="add_cart" class="btn btn-dark" value="Add to list">
-                        </form>
-                    </div>
-
-                    <div class="col-lg-8" style="margin-left:-0px">
-                       
-                        <div class="container">
-                            <div class="row">
-                                <table class="table table-bordered table-colored table-dark">
-                                    <thead>
-                                    <tr>
-                                        <th class="wd-10p">SN</th>
-                                        <th class="wd-35p">Medicine Name</th>
-                                        <th class="wd-20p">Quantity</th>
-                                        <th class="wd-20p">Unit Price</th>
-                                        <th class="wd-20p">Sub Total</th>
-                                        <th class="wd-20p">Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                  
-                                        <tr>
-                                            <th scope="row"></th>
-                                            <td id="name_medicine"></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>
-                                                <a class="cart_quantity_delete"
-                                                   href=""><i
-                                                        class="fa fa-times"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                  
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div id="memoSaveInvoice">
-                                <div class="row">
-                                    <div>
-                                        <h6 style="color:black">Total : <span>tk</span></h6>
-                                    </div>
-                                </div>
-                                <br>
-                                <form id="invoice" action="" method="post">
-                                    @csrf
-                                    <div class="row">
-                                        <div class="col col-lg-6">
-                                            <div class="form-group">
-                                                {!! Form::label('title','Invoice Title', ['class' => 'fontColor form-control-label']);!!}
-                                                {!! Form::text("title",null, ["class"=>"form-control form-control-label"]) !!}
-                                                <span class="validation-error">{{ $errors->first("title") }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col col-lg-6">
-                                            <div class="form-group">
-                                                {!! Form::label('status', 'Choose a status', ['class' => 'fontColor form-control-label'],false);!!}
-                                                {!!Form::select('status', ['1' => 'Active', '0' => 'Inactive'],NULL,
-                                                    ["class"=>"form-control form-control-label"]);
-                                                !!}
-                                                <span class="validation-error">{{ $errors->first("status") }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col col-lg-6">
-                                            <div class="form-group">
-                                                {!! Form::label('vat','Insert Vat In (%)', ['class' => 'fontColor form-control-label']);!!}
-                                                {!! Form::number("vat",null, ["class"=>"form-control ",'min'=>0,'max'=>100]) !!}
-                                                <span class="validation-error">{{ $errors->first("vat") }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="col col-lg-6">
-                                            <div class="form-group">
-                                                {!! Form::label('discount','Insert Discount Amount', ['class' => 'fontColor form-control-label']);!!}
-                                                {!! Form::number("discount",null, ["class"=>"form-control "]) !!}
-                                                <span class="validation-error">{{ $errors->first("discount") }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                   
-                                    <div id="saveInvoice">
-                                        <input type="submit" id="submit" value="Save Invoice" class="btn btn-dark">
-                                    </div>
-                                </form>
-                            </div>
+                    <h5 style="text-align:center;color:black">Create Invoice</h5>
+    
+                </div>
+                <br>
+                {!! Form::open(['url' => '/invoices','method'=>'post']) !!}
+                
+                @csrf
+                <div class="row">
+                    <div class="col col-lg-6">
+                        <div class="form-group">
+                            {!! Form::label('title','Invoice Title', ['class' => 'fontColor form-control-label']);!!}
+                            {!! Form::text("title",null, ["class"=>"form-control form-control-label"]) !!}
+                    
                         </div>
                     </div>
+                    <div class="col col-lg-6">
+                        <div class="form-group">
+                            {!! Form::label('status', 'Choose a status', ['class' => 'fontColor form-control-label'],false);!!}
+                            {!!Form::select('status', ['1' => 'Paid', '0' => 'Non-Paid'],NULL,
+                                ["class"=>"form-control form-control-label"]);
+                            !!}
+                         
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col col-lg-6">
+                        <div class="form-group">
+                            {!! Form::label('vat','Insert Vat In (%)', ['class' => 'fontColor form-control-label']);!!}
+                            {!! Form::number("vat",null, ["class"=>"form-control ",'min'=>0,'max'=>100]) !!}
+                         
+                        </div>
+                    </div>
+                    <div class="col col-lg-6">
+                        <div class="form-group">
+                            {!! Form::label('discount','Insert Discount Amount', ['class' => 'fontColor form-control-label']);!!}
+                            {!! Form::number("discount",null, ["class"=>"form-control "]) !!}
+                            
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div id="saveInvoice">
+                    <table id="dynamicAddRemove">  
+                        <tr>
+                            <th class="wd-15p fontColor">Invoice Entry</th>
+                            <th class="wd-15p fontColor">Quantity</th>
+                            <th class="wd-15p fontColor">Amount</th>
+                            <th class="wd-15p fontColor">Subtotal</th>
+                            <th class="wd-10p fontColor"></th>
+                        </tr>
+                        <tr>  
+                            <td class="td"><input type="text" name="entry[]" placeholder="Enter entry" class="form-control" id="entry" /></td>
+                            <td class="td"><input type="text" name="quantity[]" placeholder="Enter quantity" class="form-control quantity" id="quantity" /></td>  
+                            <td class="td"><input type="text" name="amount[]" placeholder="Enter amount" class="form-control amount" id="amount" /></td>
+                            <td class="td"><input type="text" name="subtotal[]" placeholder="Subtotal" class="form-control subtotal" id="subtotal" value="0.00" readonly/></td>    
+                            <td class="td2"><button type="button" name="add" id="add-btn" class="btn btn-success">Add More</button></td>  
+                        </tr>  
+                 </table> 
+                 <br>
+                    <input type="hidden" name="patientId" id="patientId">
+                    <input type="submit" id="submit" value="Save Invoice" class="btn btn-dark">
+                </div>
+
+                {!! Form::close() !!}
+            </div>
+                
 
                 </div>
             </div>
         </div>
 
         <br>
+    </div>
 
     @endsection
 
@@ -215,11 +169,36 @@
                                 console.log(data.id)                    
                                 $('#patient_id').text(data.id);
                                 $('#patient_name').text(data.name);
-                                $('#patientId').value(data.id);
+                                $('#patientId').val(data.id);
                                 
                             }
                    })
                 });
-            });
+               
+         });
         </script>
-        @endsection
+         <script type="text/javascript">
+                $(document).ready(function () {
+                    var i = 0;
+                    
+                    $("#add-btn").click(function(){
+                        ++i;
+                        $("#dynamicAddRemove").append('<tr><td class="td"><input type="text" name="entry['+i+']" placeholder="Enter entry" class="form-control"/></td><td class="td"><input type="text" name="quantity['+i+']" placeholder="Enter quantity" class="form-control quantity"  /></td><td class="td"><input type="text" name="amount['+i+']" placeholder="Enter amount" class="form-control amount" /></td><td class="td"><input type="text" name="subtotal['+i+']" placeholder="Subtotal" class="form-control subtotal" value="0.0"  readonly/></td><td class="td2"><button type="button" name="add" id="add-btn" class="btn btn-danger remove-tr">Remove</button></td></tr>');
+                        });
+                        $(document).on('click', '.remove-tr', function(){  
+                        $(this).parents('tr').remove();
+                    });
+                    $(document).on('keyup', '.amount , .quantity', function() {
+                    //get amt and qty value
+                    var amount = $(this).closest('tr').find('.amount').val();
+                    var quantity = $(this).closest('tr').find('.quantity').val();
+                    var subtotal = amount * quantity;
+                    //add value to required subtotal td
+                    $(this).closest('tr').find('.subtotal').val(subtotal);
+
+                    });
+                });  
+            </script>
+
+
+    @endsection

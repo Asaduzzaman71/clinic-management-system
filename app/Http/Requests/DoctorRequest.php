@@ -28,7 +28,7 @@ class DoctorRequest extends FormRequest
             'name' => 'required|max:255',
             'email' => 'required|email|unique:doctors,email,'.$doctor,
             'image'=>'sometimes|file|image|max:5000',
-            'password'=>'password|required',
+            'password'=>'required',
             'address'=>'nullable|max:255',
             'mobile'=>'required|integer',
             'department_id'=>'required|integer',

@@ -64,31 +64,35 @@
 </div>
 
 
-<div class="row">
-  <div class="col-lg-4">
-    <div class="form-group">
-      {!! Form::label('image', 'Image', ['class' => 'form-control-label']);!!}
-      {!! Form::file("image", null, ["class"=>"form-control form-control-label"]) !!}
-      <span class="validation-error">{{ $errors->first("image") }}</span>
-    </div>
-  </div>
 
-    <div class="col-lg-4">
+<div class="row">
+    <div class="col-lg-12">
       <div class="form-group">
         {!! Form::label('address', 'Address', ['class' => 'form-control-label']);!!}
         {!! Form::textarea('address', null, ['class' => 'ckeditor form-control']) !!}
         <span class="validation-error">{{ $errors->first("address") }}</span>
       </div>
     </div><!-- col-12 -->
-    <div class="col-lg-4">
+</div>
+<div class="row">
+    <div class="col-lg-12">
         <div class="form-group">
           {!! Form::label('profile', 'Profile', ['class' => 'form-control-label']);!!}
           {!! Form::textarea('profile', null, ['class' => 'ckeditor form-control']) !!}
           <span class="validation-error">{{ $errors->first("profile") }}</span>
         </div>
-      </div><!-- col-12 -->
-   
+      </div><!-- col-12 -->  
 </div><!-- row -->
+
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="form-group">
+        {!! Form::label('image', 'Image', ['class' => 'form-control-label']);!!}
+        {!! Form::file("image", null, ["class"=>"form-control form-control-label"]) !!}
+        <span class="validation-error">{{ $errors->first("image") }}</span>
+      </div>
+    </div>
+  </div>
 
 {!! Form::hidden('role_id',2) !!}
 

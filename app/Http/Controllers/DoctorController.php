@@ -26,44 +26,33 @@ class DoctorController extends Controller
         $this->userService = new UserService();
    
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     public function index()
     {
+        $this->authorize('viewAny',Doctor::class);
         $doctors = $this->doctorService->doctorList();
         return view('doctor.index',compact('doctors'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+  
     public function create()
     {
+        $this->authorize('create',Doctor::class);
         $departments = $this->departmentService->getDropdownList();
         return view('doctor.create',compact('departments'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function store(DoctorRequest $request)
     {
+        $this->authorize('create',Doctor::class);
         $validatedData = $request->validated();
         $validatedData['role_id']=$request->role_id;
         if ($request->hasFile('image')) {
             $validatedData['image'] = $this->ImageUpload($request, 'image', 'doctor/', 'doctor_');
             
         }
-        
-        
+  
         $doctor=$this->doctorService->createOrUpdate($validatedData);
         if($doctor){
             $user=$this->userService->createUser($validatedData);
@@ -74,47 +63,36 @@ class DoctorController extends Controller
         return redirect()->route('doctors.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Doctor  $doctor
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Doctor $doctor)
+
+    public function show($id)
     {
-        //
+        $doctor = $this->doctorService->getById($id); 
+        $this->authorize('view',$doctor);
+     
+        return view('doctor.show', compact('doctor'));   
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Doctor  $doctor
-     * @return \Illuminate\Http\Response
-     */
+
+
+
     public function edit($id)
     {
+        
         $doctor = $this->doctorService->getById($id);
+        $this->authorize('update',$doctor);
         $departments = $this->departmentService->getDropdownList();            
         return view('doctor.edit', compact('doctor','departments'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Doctor  $doctor
-     * @return \Illuminate\Http\Response
-     */
     public function update(DoctorRequest $request,$id)
     {
-        
+        $doctor = $this->doctorService->getById($id);
+        $this->authorize('update',$doctor);
         $validatedData = $request->validated();
         $validatedData['role_id']=$request->role_id;//doctor role id
         $validatedData['user_id']=$request->user_id;//doctor user id 
         $validatedData['id']=$id;//doctor id
-        
-        
-      
+
         if ($request->hasFile('image')) {
             $validatedData['image'] = $this->ImageUpload($request, 'image', 'doctor/', 'doctor_');
             
@@ -128,19 +106,48 @@ class DoctorController extends Controller
         return redirect()->route('doctors.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Doctor  $doctor
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function destroy($id)
     {
+        
+        $doctor = $this->doctorService->getById($id);
+        $this->authorize('delete',$doctor);
         $doctor = $this->doctorService->delete($id);
        
         if ($doctor) {
-            Session::flash('message','Information deleted successfully!!!!');
+            return response()->json([
+                'success' => 'Record has been deleted successfully!'
+            ]);
             }
-        return redirect()->route('doctors.index');
+       
+    }
+
+    function liveSearchDoctor(Request $request)
+    {
+     if($request->ajax())
+     {
+      $output = '';
+      $query = $request->get('query');
+      
+      if($query != '')
+      {
+        
+        $data =Doctor::
+            where('name', 'like', '%'.$query.'%')
+            ->orWhere('mobile', 'like', '%'.$query.'%')
+            ->orWhere('email', 'like', '%'.$query.'%')
+            ->orderBy('id', 'desc')
+            ->with('department')
+            ->paginate(10);
+      
+         
+      }
+      else
+      {
+        $data =Doctor::with('department')->paginate(10);
+      }
+  
+      return json_encode($data);
+     }
     }
 }

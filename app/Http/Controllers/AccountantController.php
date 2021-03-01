@@ -6,6 +6,7 @@ use App\Services\AccountantService;
 use App\Services\UserService;
 use App\Models\Accountant;
 use App\Traits\FileUpload;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class AccountantController extends Controller
@@ -29,6 +30,7 @@ class AccountantController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Accountant::class); 
         $accountants = $this->accountantService->accountantList();
         return view('accountant.index',compact('accountants'));
     }
@@ -40,6 +42,7 @@ class AccountantController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Accountant::class); 
         return view('accountant.create');
     }
 
@@ -51,6 +54,7 @@ class AccountantController extends Controller
      */
     public function store(AccountantRequest $request)
     {
+        $this->authorize('create', Accountant::class); 
         $validatedData = $request->validated();
         $validatedData['role_id']=$request->role_id;
         if ($request->hasFile('image')) {
@@ -73,9 +77,12 @@ class AccountantController extends Controller
      * @param  \App\Models\Accountant  $accountant
      * @return \Illuminate\Http\Response
      */
-    public function show(Accountant $accountant)
+    public function show($id)
     {
-        //
+        $accountant = $this->accountantService->getById($id); 
+        $this->authorize('view',$accountant); 
+
+        return view('accountant.show', compact('accountant'));    
     }
 
     /**
@@ -86,7 +93,8 @@ class AccountantController extends Controller
      */
     public function edit($id)
     {
-        $accountant = $this->accountantService->getById($id);          
+        $accountant = $this->accountantService->getById($id);
+        $this->authorize('update',$accountant);          
         return view('accountant.edit', compact('accountant'));
     }
 
@@ -99,6 +107,8 @@ class AccountantController extends Controller
      */
     public function update(AccountantRequest $request, $id)
     {
+        $accountant = $this->accountantService->getById($id);
+        $this->authorize('update',$accountant);
         $validatedData = $request->validated();
         $validatedData['user_id']=$request->user_id;//accountant user id 
         $validatedData['id']=$id;//accountant id
@@ -123,12 +133,44 @@ class AccountantController extends Controller
      */
     public function destroy($id)
     {
+        $accountant = $this->accountantService->getById($id);
+        $this->authorize('delete',$accountant);
         $accountant = $this->accountantService->delete($id);
        
-        if ($accountant) {
-            Session::flash('message','Information deleted successfully!!!!');
+      
+        if ( $accountant) {
+            return response()->json([
+                'success' => 'Record has been deleted successfully!'
+            ]);
             }
-        return redirect()->route('accountants.index');
+    }
+
+    function liveSearchAccountant(Request $request)
+    {
+     if($request->ajax())
+     {
+      $output = '';
+      $query = $request->get('query');
+      
+      if($query != '')
+      {
+        
+        $data =Accountant::
+            where('name', 'like', '%'.$query.'%')
+            ->orWhere('mobile', 'like', '%'.$query.'%')
+            ->orWhere('email', 'like', '%'.$query.'%')
+            ->orderBy('id', 'desc')
+            ->paginate(10);
+      
+         
+      }
+      else
+      {
+        $data =Accountant::paginate(10);
+      }
+  
+      return json_encode($data);
+     }
     }
     
 }

@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\Day;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
+use App\Events\NewAppointmentApprovedEvent;
 
 
 
@@ -160,12 +161,15 @@ class AppointmentController extends Controller
 
     }
 
-    public function approveAppointments($appointment){
-        $response=$this->appointmentService->approveRequestedAppointment($appointment);
-        $appointment=$this->appointmentService->getAppointmentById($appointment);
+    public function approveAppointments($appointmentId){
+      
+       //$this->appointmentService->approveRequestedAppointment($appointmentId);
+        $appointment=$this->appointmentService->getAppointmentById($appointmentId);
+        //dd($appointment);
+        event(new NewAppointmentApprovedEvent($appointment));
         
       
-        if(is_null($response)===false){
+        if(is_null($appointment)===false){
             $message = "Appointment request has been approved successfully...";
             session()->flash("message", $message);
             return redirect()->route('appointments.requested',$appointment->doctor_id);

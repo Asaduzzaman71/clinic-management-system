@@ -28,7 +28,7 @@ class AccountantRequest extends FormRequest
         return [
             'name' => 'required|max:255',
             'email' => 'required|email|unique:accountants,email,'.$accountant,
-            'password'=>'password|required',
+            'password'=>'required',
             'address'=>'nullable|max:255',
             'mobile'=>'required|integer', 
             'image'=>'sometimes|file|image|max:5000', 

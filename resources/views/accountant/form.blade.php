@@ -48,29 +48,34 @@
   
     <div class="col-lg-6">
         <div class="form-group">
+            {!! Form::label('status', 'Choose a status', ['class' => 'form-control-label']);!!}
+            {!!Form::select('status', ['1' => 'Active', '0' => 'Inactive'],NULL,
+                ["class"=>"form-control form-control-label"]);
+            !!}
+          </div>
+       
+    </div><!-- col-12 -->
+
+    <div class="col-lg-6">
+        
+        <div class="form-group">
+            {!! Form::label('image', 'Image', ['class' => 'form-control-label']);!!}
+            {!! Form::file("image", null, ["class"=>"form-control form-control-label"]) !!}
+            <span class="validation-error">{{ $errors->first("image") }}</span>
+        </div>
+    </div>
+
+   
+  
+</div><!-- row -->
+<div class="row">
+    <div class="col-lg-12">
+    <div class="form-group">
         {!! Form::label('address', 'Address', ['class' => 'form-control-label']);!!}
         {!! Form::textarea('address', null, ['class' => 'ckeditor form-control',"rows"=>"5"]) !!}
         <span class="validation-error">{{ $errors->first("address") }}</span>
         </div>
-    </div><!-- col-12 -->
-
-    <div class="col-lg-3">
-        <div class="form-group">
-          {!! Form::label('status', 'Choose a status', ['class' => 'form-control-label']);!!}
-          {!!Form::select('status', ['1' => 'Active', '0' => 'Inactive'],NULL,
-              ["class"=>"form-control form-control-label"]);
-          !!}
-        </div>
     </div>
-
-    <div class="col-lg-3">
-        <div class="form-group">
-        {!! Form::label('image', 'Image', ['class' => 'form-control-label']);!!}
-        {!! Form::file("image", null, ["class"=>"form-control form-control-label"]) !!}
-        <span class="validation-error">{{ $errors->first("image") }}</span>
-        </div>
-    </div>
-  
-</div><!-- row -->
+</div>
 
 {!! Form::hidden('role_id',4) !!}

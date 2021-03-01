@@ -33,6 +33,7 @@ class PatientController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny',Patient::class);
         $patients = $this->patientService->patientList();
         return view('patient.index',compact('patients'));
     }
@@ -44,6 +45,7 @@ class PatientController extends Controller
      */
     public function create()
     {
+        $this->authorize('create',Patient::class);
         $bloods = $this->bloodService->getDropdownList();
         return view('patient.create',compact('bloods'));
 
@@ -57,7 +59,7 @@ class PatientController extends Controller
      */
     public function store(PatientRequest $request)
     {
-     
+        $this->authorize('create',Patient::class);
         $validatedData = $request->validated();
         $validatedData['role_id']=$request->role_id;
         if ($request->hasFile('image')) {
@@ -80,9 +82,11 @@ class PatientController extends Controller
      * @param  \App\Models\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function show(Patient $patient)
+    public function show($id)
     {
-        //
+        $patient = $this->patientService->getById($id);
+        $this->authorize('view',$patient); 
+        return view('patient.show', compact('patient'));    
     }
 
     /**
@@ -94,6 +98,7 @@ class PatientController extends Controller
     public function edit($id)
     {
         $patient = $this->patientService->getById($id);
+        $this->authorize('update',$patient);
         $bloods = $this->bloodService->getDropdownList();           
         return view('patient.edit', compact('patient','bloods'));
     }
@@ -107,6 +112,8 @@ class PatientController extends Controller
      */
     public function update(PatientRequest $request, $id)
     {
+        $patient = $this->patientService->getById($id);
+        $this->authorize('update',$patient);
         $validatedData = $request->validated();
         $validatedData['role_id']=$request->role_id;//patient role id
         $validatedData['user_id']=$request->user_id;//patient user id 
@@ -134,7 +141,8 @@ class PatientController extends Controller
      */
     public function destroy($id)
     {
-        
+        $patient = $this->patientService->getById($id);
+        $this->authorize('delete',$patient);
         $patient = $this->patientService->delete($id);
        
         if ($patient) {
@@ -171,4 +179,31 @@ class PatientController extends Controller
                 ->first(); 
             return response()->json($data);
     }
+
+    function liveSearchPatientInformation(Request $request)
+    {
+       
+      $query = $request->get('query');
+      
+      
+      if($query != '')
+      {
+        
+        $patients =Patient::
+            where('name', 'like', '%'.$query.'%')
+            ->orWhere('mobile', 'like', '%'.$query.'%')
+            ->orWhere('email', 'like', '%'.$query.'%')
+            ->orderBy('id', 'desc')
+            ->paginate(10);
+      
+         
+      }
+      else
+      {
+        $patients =Patient::paginate(10);
+      }
+  
+      return view('patient.index',compact('patients'));
+     }
+    
 }

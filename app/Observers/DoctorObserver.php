@@ -65,8 +65,6 @@ class DoctorObserver
     {
         //$doctor->prescriptions()->DiagnosisReports()->forcedelete();
         $doctor->schedules()->forcedelete();
-        $doctor->appointments()->Delete();
-        $doctor->prescriptions()->delete();
         $doctor->user()->forcedelete();
     
     }

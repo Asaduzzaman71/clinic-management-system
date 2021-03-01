@@ -6,7 +6,7 @@ class BloodService{
 
 
     public function bloodList(){
-        return Blood::latest()->paginate(3);
+        return Blood::latest()->paginate(5);
     }
     public function createOrUpdate($data)
     {

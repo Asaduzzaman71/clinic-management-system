@@ -21,5 +21,13 @@ class Schedule extends Model
     {
         return $this->belongsTo(Doctor::class);
     }
+    // public function getStatusAttribute($value)
+    // {
+    //     return [
+    //         1 => 'Active',
+    //         0 => 'Inactive',
+    //     ][$value];
+    // }
+
 
 }

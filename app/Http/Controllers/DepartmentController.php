@@ -27,6 +27,7 @@ class DepartmentController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny',Department::class);
         $departments = $this->departmentService->departmentList();
         return view('department.index',compact('departments'));
     }
@@ -38,7 +39,7 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-
+        $this->authorize('create',Department::class);
         return view('department.create');
     }
 
@@ -50,6 +51,7 @@ class DepartmentController extends Controller
      */
     public function store(DepartmentRequest $request)
     {
+        $this->authorize('create',Department::class);
         $validatedData = $request->validated(); 
       
         if ($request->hasFile('icon')) {
@@ -69,7 +71,7 @@ class DepartmentController extends Controller
      */
     public function show(Department $department)
     {
-        //
+        
     }
 
     /**
@@ -80,6 +82,8 @@ class DepartmentController extends Controller
      */
     public function edit($id)
     {
+        $department = $this->departmentService->getById($id);
+        $this->authorize('update',$department);
         $department = $this->departmentService->getById($id);            
         return view('department.edit', compact('department'));
 
@@ -95,6 +99,8 @@ class DepartmentController extends Controller
      */
     public function update(DepartmentRequest $request, $id)
     {
+        $department = $this->departmentService->getById($id);
+        $this->authorize('update',$department);
         $validatedData = $request->validated(); 
         $validatedData['id']=$id;
         
@@ -117,6 +123,8 @@ class DepartmentController extends Controller
      */
     public function destroy($id)
     {
+        $department = $this->departmentService->getById($id);
+        $this->authorize('delete',$department);
         $department = $this->departmentService->delete($id);
        
         if ($department) {

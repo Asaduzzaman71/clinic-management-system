@@ -28,7 +28,7 @@ class PatientRequest extends FormRequest
             'blood_id'=>'required|integer',
             'name' => 'required|max:255',
             'email' => 'required|email|unique:patients,email,'.$patient,
-            'password'=>'password|required',
+            'password'=>'required',
             'birthdate'=>'required',
             'address'=>'nullable|max:255',
             'mobile'=>'required|integer',

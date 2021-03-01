@@ -11,7 +11,7 @@
                 <h5>Edit Patient Information</h5>
             </div>
             <div class="col-lg-3 offset-lg-6">
-                <a href="{{route('patients.index')}}" class="btn btn-primary">All Doctor List</a>
+                <a href="{{route('patients.index')}}" class="btn btn-primary">All Patient List</a>
             </div>
         </div>
         <hr>

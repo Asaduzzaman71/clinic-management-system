@@ -41,4 +41,13 @@ class Doctor extends Model
     }
 
 
+    public function getStatusAttribute($value)
+    {
+        return [
+            1 => 'Active',
+            0 => 'Inactive',
+        ][$value];
+    }
+
+
 }

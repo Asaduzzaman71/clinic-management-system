@@ -1,643 +1,299 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+@extends('layout.guest')
+@section('menu')
+     <li><a href="#top" class="smoothScroll">Home</a></li>
+     <li><a href="#about" class="smoothScroll">About Us</a></li>
+     <li><a href="#team" class="smoothScroll">Doctors</a></li>
+     <li><a href="#news" class="smoothScroll">News</a></li>
+     <li><a href="#google-map" class="smoothScroll">Contact</a></li>
+     <li class="appointment-btn"><a href="#appointment">Make an appointment</a></li>     
+@endsection
+@section('content')
 
-     <title>Health - Medical Website Template</title>
-<!--
 
-Template 2098 Health
+ <!-- HOME -->
+ <section id="home" class="slider" data-stellar-background-ratio="0.5">
+     <div class="container">
+          <div class="row">
 
-http://www.tooplate.com/view/2098-health
+                    <div class="owl-carousel owl-theme">
+                         <div class="item item-first">
+                              <div class="caption">
+                                   <div class="col-md-offset-1 col-md-10">
+                                        <h3>Let's make your life happier</h3>
+                                        <h1>Healthy Living</h1>
+                                        <a href="#team" class="section-btn btn btn-default smoothScroll">Meet Our Doctors</a>
+                                   </div>
+                              </div>
+                         </div>
 
--->
-     <meta charset="UTF-8">
-     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-     <meta name="description" content="">
-     <meta name="keywords" content="">
-     <meta name="author" content="Tooplate">
-     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+                         <div class="item item-second">
+                              <div class="caption">
+                                   <div class="col-md-offset-1 col-md-10">
+                                        <h3>Aenean luctus lobortis tellus</h3>
+                                        <h1>New Lifestyle</h1>
+                                        <a href="#about" class="section-btn btn btn-default btn-gray smoothScroll">More About Us</a>
+                                   </div>
+                              </div>
+                         </div>
 
-     <link rel="stylesheet" href="{{asset('assets/frontend/css/bootstrap.min.css')}}">
-     <link rel="stylesheet" href="{{asset('assets/frontend/css/font-awesome.min.css')}}">
-     <link rel="stylesheet" href="{{asset('assets/frontend/css/animate.css')}}">
-     <link rel="stylesheet" href="{{asset('assets/frontend/css/owl.carousel.css')}}">
-     <link rel="stylesheet" href="{{asset('assets/frontend/css/owl.theme.default.min.css')}}">
+                         <div class="item item-third">
+                              <div class="caption">
+                                   <div class="col-md-offset-1 col-md-10">
+                                        <h3>Pellentesque nec libero nisi</h3>
+                                        <h1>Your Health Benefits</h1>
+                                        <a href="#news" class="section-btn btn btn-default btn-blue smoothScroll">Read Stories</a>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
 
-     <!-- MAIN CSS -->
-     <link rel="stylesheet" href="{{asset('assets/frontend/css/tooplate-style.css')}}">
-     <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css"> 
+          </div>
+     </div>
+</section>
 
-     
-</head>
-<body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
 
-     <!-- PRE LOADER -->
-     <section class="preloader">
-          <div class="spinner">
+<!-- ABOUT -->
+<section id="about">
+     <div class="container">
+          <div class="row">
 
-               <span class="spinner-rotate"></span>
+               <div class="col-md-6 col-sm-6">
+                    <div class="about-info">
+                         <h2 class="wow fadeInUp" data-wow-delay="0.6s">Welcome to Your <i class="fa fa-h-square"></i>ealth Center</h2>
+                         <div class="wow fadeInUp" data-wow-delay="0.8s">
+                              <p>Aenean luctus lobortis tellus, vel ornare enim molestie condimentum. Curabitur lacinia nisi vitae velit volutpat venenatis.</p>
+                              <p>Sed a dignissim lacus. Quisque fermentum est non orci commodo, a luctus urna mattis. Ut placerat, diam a tempus vehicula.</p>
+                         </div>
+                         <figure class="profile wow fadeInUp" data-wow-delay="1s">
+                              <img src="{{URL::to('assets/frontend/images/author-image.jpg')}}" class="img-responsive" alt="">
+                              <figcaption>
+                                   <h3>Dr. Neil Jackson</h3>
+                                   <p>General Principal</p>
+                              </figcaption>
+                         </figure>
+                    </div>
+               </div>
                
           </div>
-     </section>
+     </div>
+</section>
 
 
-     <!-- HEADER -->
-     <header>
-          <div class="container">
-               <div class="row">
+<!-- TEAM -->
+<section id="team" data-stellar-background-ratio="1">
+     <div class="container">
+          <div class="row">
 
-                    <div class="col-md-4 col-sm-5">
-                         <p>Welcome to a Professional Health Care</p>
+               <div class="col-md-6 col-sm-6">
+                    <div class="about-info">
+                         <h2 class="wow fadeInUp" data-wow-delay="0.1s">Our Doctors</h2>
                     </div>
-                         
-                    <div class="col-md-8 col-sm-7 text-align-right">
-                         <span class="phone-icon"><i class="fa fa-phone"></i> 010-060-0160</span>
-                         <span class="date-icon"><i class="fa fa-calendar-plus-o"></i> 6:00 AM - 10:00 PM (Mon-Fri)</span>
-                         <span class="email-icon"><i class="fa fa-envelope-o"></i> <a href="#">info@company.com</a></span>
+               </div>
+
+               <div class="clearfix"></div>
+
+               @foreach($doctors as $doctor)
+               <div class="col-md-4 col-sm-6">
+                    <div class="team-thumb wow fadeInUp" data-wow-delay="0.2s">
+                         <a href="{{ route('doctor.details',$doctor->id) }}"><img src="{{URL::asset($doctor->image)}}" class="img-responsive" alt=""></a>
+
+                              <div class="team-info">
+                                   <h3>{{ $doctor->name }}</h3>
+                                   <p>{{ $doctor->department->name }}</p>
+                                   <div class="team-contact-info">
+                                        <p><i class="fa fa-phone"></i> {{ $doctor->mobile }}</p>
+                                        <p><i class="fa fa-envelope-o"></i> <a href="#">{{ $doctor->email }}</a></p>
+                                      
+                                   </div>
+                                   <a class="btn btn-primary" href="{{ route('doctor.details',$doctor->id) }}">View Details</a>
+                                   <ul class="social-icon">
+                                       
+                                        <li><a href="#" class="fa fa-envelope-o"></a></li>
+                                   </ul>
+                                  
+                              </div>
+
                     </div>
-
                </div>
+               
+               @endforeach
+               
+               
           </div>
-     </header>
+     </div>
+</section>
 
 
-     <!-- MENU -->
-     <section class="navbar navbar-default navbar-static-top" role="navigation">
-          <div class="container">
+<!-- NEWS -->
+<section id="news" data-stellar-background-ratio="2.5">
+     <div class="container">
+          <div class="row">
 
-               <div class="navbar-header">
-                    <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                         <span class="icon icon-bar"></span>
-                         <span class="icon icon-bar"></span>
-                         <span class="icon icon-bar"></span>
-                    </button>
-
-                    <!-- lOGO TEXT HERE -->
-                    <a href="index.html" class="navbar-brand"><i class="fa fa-h-square"></i>ealth Center</a>
+               <div class="col-md-12 col-sm-12">
+                    <!-- SECTION TITLE -->
+                    <div class="section-title wow fadeInUp" data-wow-delay="0.1s">
+                         <h2>Latest News</h2>
+                    </div>
                </div>
 
-               <!-- MENU LINKS -->
-               <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                         <li><a href="#top" class="smoothScroll">Home</a></li>
-                         <li><a href="#about" class="smoothScroll">About Us</a></li>
-                         <li><a href="#team" class="smoothScroll">Doctors</a></li>
-                         <li><a href="#news" class="smoothScroll">News</a></li>
-                         <li><a href="#google-map" class="smoothScroll">Contact</a></li>
-                         <li class="appointment-btn"><a href="#appointment">Make an appointment</a></li>
-                         <li class="login-btn"><a href="{{route('login')}}">login</a></li>
-                       
-                    </ul>
-               </div>
-
-          </div>
-     </section>
-
-
-     <!-- HOME -->
-     <section id="home" class="slider" data-stellar-background-ratio="0.5">
-          <div class="container">
-               <div class="row">
-
-                         <div class="owl-carousel owl-theme">
-                              <div class="item item-first">
-                                   <div class="caption">
-                                        <div class="col-md-offset-1 col-md-10">
-                                             <h3>Let's make your life happier</h3>
-                                             <h1>Healthy Living</h1>
-                                             <a href="#team" class="section-btn btn btn-default smoothScroll">Meet Our Doctors</a>
-                                        </div>
-                                   </div>
-                              </div>
-
-                              <div class="item item-second">
-                                   <div class="caption">
-                                        <div class="col-md-offset-1 col-md-10">
-                                             <h3>Aenean luctus lobortis tellus</h3>
-                                             <h1>New Lifestyle</h1>
-                                             <a href="#about" class="section-btn btn btn-default btn-gray smoothScroll">More About Us</a>
-                                        </div>
-                                   </div>
-                              </div>
-
-                              <div class="item item-third">
-                                   <div class="caption">
-                                        <div class="col-md-offset-1 col-md-10">
-                                             <h3>Pellentesque nec libero nisi</h3>
-                                             <h1>Your Health Benefits</h1>
-                                             <a href="#news" class="section-btn btn btn-default btn-blue smoothScroll">Read Stories</a>
-                                        </div>
-                                   </div>
-                              </div>
-                         </div>
-
-               </div>
-          </div>
-     </section>
-
-
-     <!-- ABOUT -->
-     <section id="about">
-          <div class="container">
-               <div class="row">
-
-                    <div class="col-md-6 col-sm-6">
-                         <div class="about-info">
-                              <h2 class="wow fadeInUp" data-wow-delay="0.6s">Welcome to Your <i class="fa fa-h-square"></i>ealth Center</h2>
-                              <div class="wow fadeInUp" data-wow-delay="0.8s">
-                                   <p>Aenean luctus lobortis tellus, vel ornare enim molestie condimentum. Curabitur lacinia nisi vitae velit volutpat venenatis.</p>
-                                   <p>Sed a dignissim lacus. Quisque fermentum est non orci commodo, a luctus urna mattis. Ut placerat, diam a tempus vehicula.</p>
-                              </div>
-                              <figure class="profile wow fadeInUp" data-wow-delay="1s">
+               <div class="col-md-4 col-sm-6">
+                    <!-- NEWS THUMB -->
+                    <div class="news-thumb wow fadeInUp" data-wow-delay="0.4s">
+                         <a href="news-detail.html">
+                              <img src="{{URL::to('assets/frontend/images/news-image1.jpg')}}" class="img-responsive" alt="">
+                         </a>
+                         <div class="news-info">
+                              <span>March 08, 2018</span>
+                              <h3><a href="news-detail.html">About Amazing Technology</a></h3>
+                              <p>Maecenas risus neque, placerat volutpat tempor ut, vehicula et felis.</p>
+                              <div class="author">
                                    <img src="{{URL::to('assets/frontend/images/author-image.jpg')}}" class="img-responsive" alt="">
-                                   <figcaption>
-                                        <h3>Dr. Neil Jackson</h3>
-                                        <p>General Principal</p>
-                                   </figcaption>
-                              </figure>
+                                   <div class="author-info">
+                                        <h5>Jeremie Carlson</h5>
+                                        <p>CEO / Founder</p>
+                                   </div>
+                              </div>
                          </div>
                     </div>
-                    
                </div>
-          </div>
-     </section>
 
-
-     <!-- TEAM -->
-     <section id="team" data-stellar-background-ratio="1">
-          <div class="container">
-               <div class="row">
-
-                    <div class="col-md-6 col-sm-6">
-                         <div class="about-info">
-                              <h2 class="wow fadeInUp" data-wow-delay="0.1s">Our Doctors</h2>
-                         </div>
-                    </div>
-
-                    <div class="clearfix"></div>
-
-                    <div class="col-md-4 col-sm-6">
-                         <div class="team-thumb wow fadeInUp" data-wow-delay="0.2s">
-                              <img src="{{URL::to('assets/frontend/images/team-image1.jpg')}}" class="img-responsive" alt="">
-
-                                   <div class="team-info">
-                                        <h3>Nate Baston</h3>
-                                        <p>General Principal</p>
-                                        <div class="team-contact-info">
-                                             <p><i class="fa fa-phone"></i> 010-020-0120</p>
-                                             <p><i class="fa fa-envelope-o"></i> <a href="#">general@company.com</a></p>
-                                        </div>
-                                        <ul class="social-icon">
-                                             <li><a href="#" class="fa fa-linkedin-square"></a></li>
-                                             <li><a href="#" class="fa fa-envelope-o"></a></li>
-                                        </ul>
+               <div class="col-md-4 col-sm-6">
+                    <!-- NEWS THUMB -->
+                    <div class="news-thumb wow fadeInUp" data-wow-delay="0.6s">
+                         <a href="news-detail.html">
+                              <img src="{{URL::to('assets/frontend/images/news-image2.jpg')}}" class="img-responsive" alt="">
+                         </a>
+                         <div class="news-info">
+                              <span>February 20, 2018</span>
+                              <h3><a href="news-detail.html">Introducing a new healing process</a></h3>
+                              <p>Fusce vel sem finibus, rhoncus massa non, aliquam velit. Nam et est ligula.</p>
+                              <div class="author">
+                                   <img src="{{URL::to('assets/frontend/images/author-image.jpg')}}" class="img-responsive" alt="">
+                                   <div class="author-info">
+                                        <h5>Jason Stewart</h5>
+                                        <p>General Director</p>
                                    </div>
-
+                              </div>
                          </div>
                     </div>
-
-                    <div class="col-md-4 col-sm-6">
-                         <div class="team-thumb wow fadeInUp" data-wow-delay="0.4s">
-                              <img src="{{URL::to('assets/frontend/images/team-image2.jpg')}}" class="img-responsive" alt="">
-
-                                   <div class="team-info">
-                                        <h3>Jason Stewart</h3>
-                                        <p>Pregnancy</p>
-                                        <div class="team-contact-info">
-                                             <p><i class="fa fa-phone"></i> 010-070-0170</p>
-                                             <p><i class="fa fa-envelope-o"></i> <a href="#">pregnancy@company.com</a></p>
-                                        </div>
-                                        <ul class="social-icon">
-                                             <li><a href="#" class="fa fa-facebook-square"></a></li>
-                                             <li><a href="#" class="fa fa-envelope-o"></a></li>
-                                             <li><a href="#" class="fa fa-flickr"></a></li>
-                                        </ul>
-                                   </div>
-
-                         </div>
-                    </div>
-
-                    <div class="col-md-4 col-sm-6">
-                         <div class="team-thumb wow fadeInUp" data-wow-delay="0.6s">
-                              <img src="{{URL::to('assets/frontend/images/team-image3.jpg')}}" class="img-responsive" alt="">
-
-                                   <div class="team-info">
-                                        <h3>Miasha Nakahara</h3>
-                                        <p>Cardiology</p>
-                                        <div class="team-contact-info">
-                                             <p><i class="fa fa-phone"></i> 010-040-0140</p>
-                                             <p><i class="fa fa-envelope-o"></i> <a href="#">cardio@company.com</a></p>
-                                        </div>
-                                        <ul class="social-icon">
-                                             <li><a href="#" class="fa fa-twitter"></a></li>
-                                             <li><a href="#" class="fa fa-envelope-o"></a></li>
-                                        </ul>
-                                   </div>
-
-                         </div>
-                    </div>
-                    
                </div>
+
+               <div class="col-md-4 col-sm-6">
+                    <!-- NEWS THUMB -->
+                    <div class="news-thumb wow fadeInUp" data-wow-delay="0.8s">
+                         <a href="news-detail.html">
+                              <img src="{{URL::to('assets/frontend/images/news-image3.jpg')}}" class="img-responsive" alt="">
+                         </a>
+                         <div class="news-info">
+                              <span>January 27, 2018</span>
+                              <h3><a href="news-detail.html">Review Annual Medical Research</a></h3>
+                              <p>Vivamus non nulla semper diam cursus maximus. Pellentesque dignissim.</p>
+                              <div class="author">
+                                   <img src="{{URL::to('assets/frontend/images/author-image.jpg')}}" class="img-responsive" alt="">
+                                   <div class="author-info">
+                                        <h5>Andrio Abero</h5>
+                                        <p>Online Advertising</p>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+
           </div>
-     </section>
+     </div>
+</section>
 
 
-     <!-- NEWS -->
-     <section id="news" data-stellar-background-ratio="2.5">
-          <div class="container">
-               <div class="row">
+<!-- MAKE AN APPOINTMENT -->
 
-                    <div class="col-md-12 col-sm-12">
+<section id="appointment" data-stellar-background-ratio="3">
+     <div class="container">
+          <div class="row">
+ 
+               <div class="col-md-6 col-sm-6">
+                    <img src="{{URL::to('assets/frontend/images/appointment-image.jpg')}}" class="img-responsive" alt="">
+               </div>
+ 
+               <div class="col-md-6 col-sm-6"  id="appointment">
+                   
+                   
+                    <!-- CONTACT FORM HERE -->
+                   
+ 
                          <!-- SECTION TITLE -->
-                         <div class="section-title wow fadeInUp" data-wow-delay="0.1s">
-                              <h2>Latest News</h2>
-                         </div>
-                    </div>
-
-                    <div class="col-md-4 col-sm-6">
-                         <!-- NEWS THUMB -->
-                         <div class="news-thumb wow fadeInUp" data-wow-delay="0.4s">
-                              <a href="news-detail.html">
-                                   <img src="{{URL::to('assets/frontend/images/news-image1.jpg')}}" class="img-responsive" alt="">
-                              </a>
-                              <div class="news-info">
-                                   <span>March 08, 2018</span>
-                                   <h3><a href="news-detail.html">About Amazing Technology</a></h3>
-                                   <p>Maecenas risus neque, placerat volutpat tempor ut, vehicula et felis.</p>
-                                   <div class="author">
-                                        <img src="{{URL::to('assets/frontend/images/author-image.jpg')}}" class="img-responsive" alt="">
-                                        <div class="author-info">
-                                             <h5>Jeremie Carlson</h5>
-                                             <p>CEO / Founder</p>
-                                        </div>
-                                   </div>
+                         <div class="section-title wow fadeInUp" data-wow-delay="0.4s">
+                              <h2>Make an appointment</h2>
+                              <div class="d-flex">
+                                   <button class="btn btn-primary" id="new">New Patient</button> 
+                                    <button class="btn btn-success" id="old"> Old Patient</button>
                               </div>
                          </div>
-                    </div>
-
-                    <div class="col-md-4 col-sm-6">
-                         <!-- NEWS THUMB -->
-                         <div class="news-thumb wow fadeInUp" data-wow-delay="0.6s">
-                              <a href="news-detail.html">
-                                   <img src="{{URL::to('assets/frontend/images/news-image2.jpg')}}" class="img-responsive" alt="">
-                              </a>
-                              <div class="news-info">
-                                   <span>February 20, 2018</span>
-                                   <h3><a href="news-detail.html">Introducing a new healing process</a></h3>
-                                   <p>Fusce vel sem finibus, rhoncus massa non, aliquam velit. Nam et est ligula.</p>
-                                   <div class="author">
-                                        <img src="{{URL::to('assets/frontend/images/author-image.jpg')}}" class="img-responsive" alt="">
-                                        <div class="author-info">
-                                             <h5>Jason Stewart</h5>
-                                             <p>General Director</p>
-                                        </div>
-                                   </div>
+                         
+                      
+                         {!! Form::open(['url' => '/appointments','method'=>'post',"id"=>"appointment-form","role"=>"form"]) !!}
+ 
+                         <div class="wow fadeInUp " data-wow-delay="0.8s">
+                              <div class="col-md-6 col-sm-6 " style="display:none"  id="patientId">
+                                   
+                                   {!! Form::label('Patient Id','Patient Id', ['class' => 'form-control-label']);!!}
+                                   {!! Form::number("patient_id",null, ["class"=>"form-control "]) !!}
+                                   <span class="validation-error">{{ $errors->first("patient_id") }}</span>
                               </div>
-                         </div>
-                    </div>
-
-                    <div class="col-md-4 col-sm-6">
-                         <!-- NEWS THUMB -->
-                         <div class="news-thumb wow fadeInUp" data-wow-delay="0.8s">
-                              <a href="news-detail.html">
-                                   <img src="{{URL::to('assets/frontend/images/news-image3.jpg')}}" class="img-responsive" alt="">
-                              </a>
-                              <div class="news-info">
-                                   <span>January 27, 2018</span>
-                                   <h3><a href="news-detail.html">Review Annual Medical Research</a></h3>
-                                   <p>Vivamus non nulla semper diam cursus maximus. Pellentesque dignissim.</p>
-                                   <div class="author">
-                                        <img src="{{URL::to('assets/frontend/images/author-image.jpg')}}" class="img-responsive" alt="">
-                                        <div class="author-info">
-                                             <h5>Andrio Abero</h5>
-                                             <p>Online Advertising</p>
-                                        </div>
-                                   </div>
+ 
+                              <div class="col-md-6 col-sm-6 "  id="name">
+                                   
+                                   {!! Form::label('name','Name', ['class' => 'form-control-label']);!!}
+                                   {!! Form::text("name",null, ["class"=>"form-control ","placeholder"=>"Your Name",]) !!}
+                                   <span class="validation-error">{{ $errors->first("name") }}</span>
                               </div>
-                         </div>
-                    </div>
-
-               </div>
-          </div>
-     </section>
-
-
-     <!-- MAKE AN APPOINTMENT -->
-     <section id="appointment" data-stellar-background-ratio="3">
-          <div class="container">
-               <div class="row">
-
-                    <div class="col-md-6 col-sm-6">
-                         <img src="{{URL::to('assets/frontend/images/appointment-image.jpg')}}" class="img-responsive" alt="">
-                    </div>
-
-                    <div class="col-md-6 col-sm-6"  id="appointment">
-                        
-                        
-                         <!-- CONTACT FORM HERE -->
-                        
-
-                              <!-- SECTION TITLE -->
-                              <div class="section-title wow fadeInUp" data-wow-delay="0.4s">
-                                   <h2>Make an appointment</h2>
-                                   <div class="d-flex">
-                                        <button class="btn btn-primary" id="new">New Patient</button> 
-                                         <button class="btn btn-success" id="old"> Old Patient</button>
-                                   </div>
+ 
+                              <div class="col-md-6 col-sm-6 " id="email">
+                                  
+                                   {!! Form::label('email','Email', ['class' => 'form-control-label']);!!}
+                                   {!! Form::email("email",null, ["class"=>"form-control ","placeholder"=>"Your Email"]) !!}
+                                   <span class="validation-error">{{ $errors->first("email") }}</span>
+                              </div>
+ 
+                              <div class="col-md-6 col-sm-6" id="phone">
+                                  
+                                   {!! Form::label('mobile','Mobile', ['class' => 'form-control-label']);!!}
+                                   {!! Form::text("mobile",null, ["class"=>"form-control ","placeholder"=>"Your Mobile"]) !!}
+                                   <span class="validation-error">{{ $errors->first("mobile") }}</span>
                               </div>
                               
-                           
-                              {!! Form::open(['url' => '/appointments','method'=>'post',"id"=>"appointment-form","role"=>"form"]) !!}
-
-                              <div class="wow fadeInUp " data-wow-delay="0.8s">
-                                   <div class="col-md-6 col-sm-6 " style="display:none"  id="patientId">
-                                        
-                                        {!! Form::label('Patient Id','Patient Id', ['class' => 'form-control-label']);!!}
-                                        {!! Form::number("patient_id",null, ["class"=>"form-control "]) !!}
-                                        <span class="validation-error">{{ $errors->first("patient_id") }}</span>
-                                   </div>
-
-                                   <div class="col-md-6 col-sm-6 "  id="name">
-                                        
-                                        {!! Form::label('name','Name', ['class' => 'form-control-label']);!!}
-                                        {!! Form::text("name",null, ["class"=>"form-control ","placeholder"=>"Your Name",]) !!}
-                                        <span class="validation-error">{{ $errors->first("name") }}</span>
-                                   </div>
-
-                                   <div class="col-md-6 col-sm-6 " id="email">
-                                       
-                                        {!! Form::label('email','Email', ['class' => 'form-control-label']);!!}
-                                        {!! Form::email("email",null, ["class"=>"form-control ","placeholder"=>"Your Email"]) !!}
-                                        <span class="validation-error">{{ $errors->first("email") }}</span>
-                                   </div>
-
-                                   <div class="col-md-6 col-sm-6" id="phone">
-                                       
-                                        {!! Form::label('mobile','Mobile', ['class' => 'form-control-label']);!!}
-                                        {!! Form::text("mobile",null, ["class"=>"form-control ","placeholder"=>"Your Mobile"]) !!}
-                                        <span class="validation-error">{{ $errors->first("mobile") }}</span>
-                                   </div>
-                                   
-
-                                   <div class="col-md-6 col-sm-6">
-                                        {!! Form::label('department_id', 'Select Department', ['class' => 'form-control-label']);!!}
-                                        {!! Form::select('department_id', $departments ,  null , ['placeholder' => 'Select Department',"class"=>"form-control department",'id'=>'department','required' => 'required']) !!}
-                                        <span class="validation-error">{{ $errors->first("department_id") }}</span>
-                                   </div>
-                                   <div class="col-md-6 col-sm-6">
-                                        <label for="select">Select Doctor</label>
-                                            <select name="doctor_id" id="doctor" class="form-control doctor" >
-                                                  <option value="0" disabled="true" selected="true">Doctor Name</option>
-                                             </select>
-                                             <span class="validation-error">{{ $errors->first("doctor_id") }}</span>
-                                   </div>
-                                   <div class="col-md-6 col-sm-6">
-                                        {!! Form::label('date','Date:', ['class' => 'form-control-label']);!!}
-                                        {!! Form::date("date",NULL, ["class"=>"form-control","placeholder"=>"Your Email","id"=>"date",'required' => 'required']) !!}
-                                        <span class="validation-error">{{ $errors->first("date") }}</span>
-                                   </div>
-
-                                   <div class="col-md-12 col-sm-12">
-                                        {!! Form::label('message', 'Message', ['class' => 'form-control-label']);!!}
-                                        {!! Form::textarea('message', null, ['class' => 'form-control','id'=>'message','rows'=>5,'required' => 'required']) !!}
-                                        <span class="validation-error">{{ $errors->first("messgae") }}</span>
-                                        {!! Form::hidden('status',0) !!}
-                                       
-                                        <button type="submit" class="form-control" id="cf-submit" name="submit">Submit Button</button>
-                                   </div>
+ 
+                              <div class="col-md-6 col-sm-6">
+                                   {!! Form::label('department_id', 'Select Department', ['class' => 'form-control-label']);!!}
+                                   {!! Form::select('department_id', $departments ,  null , ['placeholder' => 'Select Department',"class"=>"form-control department",'id'=>'department','required' => 'required']) !!}
+                                   <span class="validation-error">{{ $errors->first("department_id") }}</span>
                               </div>
-                              {!! Form::close() !!}
-                    </div>
-
+                              <div class="col-md-6 col-sm-6">
+                                   <label for="select">Select Doctor</label>
+                                       <select name="doctor_id" id="doctor" class="form-control doctor" >
+                                             <option value="0" disabled="true" selected="true">Doctor Name</option>
+                                        </select>
+                                        <span class="validation-error">{{ $errors->first("doctor_id") }}</span>
+                              </div>
+                              <div class="col-md-6 col-sm-6">
+                                   {!! Form::label('date','Date:', ['class' => 'form-control-label']);!!}
+                                   {!! Form::date("date",NULL, ["class"=>"form-control","placeholder"=>"Your Email","id"=>"date",'required' => 'required']) !!}
+                                   <span class="validation-error">{{ $errors->first("date") }}</span>
+                              </div>
+ 
+                              <div class="col-md-12 col-sm-12">
+                                   {!! Form::label('message', 'Message', ['class' => 'form-control-label']);!!}
+                                   {!! Form::textarea('message', null, ['class' => 'form-control','id'=>'message','rows'=>5,'required' => 'required']) !!}
+                                   <span class="validation-error">{{ $errors->first("messgae") }}</span>
+                                   {!! Form::hidden('status',0) !!}
+                                  
+                                   <button type="submit" class="form-control" id="cf-submit" name="submit">Submit Button</button>
+                              </div>
+                         </div>
+                         {!! Form::close() !!}
                </div>
+ 
           </div>
-     </section>
+     </div>
+ </section>
 
-
-     <!-- GOOGLE MAP -->
-     <section id="google-map">
-     <!-- How to change your own map point
-            1. Go to Google Maps
-            2. Click on your location point
-            3. Click "Share" and choose "Embed map" tab
-            4. Copy only URL::to and paste it within the src="" field below
-	-->
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3647.3030413476204!2d100.5641230193719!3d13.757206847615207!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xf51ce6427b7918fc!2sG+Tower!5e0!3m2!1sen!2sth!4v1510722015945" width="100%" height="350" frameborder="0" style="border:0" allowfullscreen></iframe>
-     </section>           
-
-
-     <!-- FOOTER -->
-     <footer data-stellar-background-ratio="5">
-          <div class="container">
-               <div class="row">
-
-                    <div class="col-md-4 col-sm-4">
-                         <div class="footer-thumb"> 
-                              <h4 class="wow fadeInUp" data-wow-delay="0.4s">Contact Info</h4>
-                              <p>Fusce at libero iaculis, venenatis augue quis, pharetra lorem. Curabitur ut dolor eu elit consequat ultricies.</p>
-
-                              <div class="contact-info">
-                                   <p><i class="fa fa-phone"></i> 010-070-0170</p>
-                                   <p><i class="fa fa-envelope-o"></i> <a href="#">info@company.com</a></p>
-                              </div>
-                         </div>
-                    </div>
-
-                    <div class="col-md-4 col-sm-4"> 
-                         <div class="footer-thumb"> 
-                              <h4 class="wow fadeInUp" data-wow-delay="0.4s">Latest News</h4>
-                              <div class="latest-stories">
-                                   <div class="stories-image">
-                                        <a href="#"><img src="{{URL::to('assets/frontend/images/news-image.jpg')}}" class="img-responsive" alt=""></a>
-                                   </div>
-                                   <div class="stories-info">
-                                        <a href="#"><h5>Amazing Technology</h5></a>
-                                        <span>March 08, 2018</span>
-                                   </div>
-                              </div>
-
-                              <div class="latest-stories">
-                                   <div class="stories-image">
-                                        <a href="#"><img src="{{URL::to('assets/frontend/images/news-image.jpg')}}" class="img-responsive" alt=""></a>
-                                   </div>
-                                   <div class="stories-info">
-                                        <a href="#"><h5>New Healing Process</h5></a>
-                                        <span>February 20, 2018</span>
-                                   </div>
-                              </div>
-                         </div>
-                    </div>
-
-                    <div class="col-md-4 col-sm-4"> 
-                         <div class="footer-thumb">
-                              <div class="opening-hours">
-                                   <h4 class="wow fadeInUp" data-wow-delay="0.4s">Opening Hours</h4>
-                                   <p>Monday - Friday <span>06:00 AM - 10:00 PM</span></p>
-                                   <p>Saturday <span>09:00 AM - 08:00 PM</span></p>
-                                   <p>Sunday <span>Closed</span></p>
-                              </div> 
-
-                              <ul class="social-icon">
-                                   <li><a href="#" class="fa fa-facebook-square" attr="facebook icon"></a></li>
-                                   <li><a href="#" class="fa fa-twitter"></a></li>
-                                   <li><a href="#" class="fa fa-instagram"></a></li>
-                              </ul>
-                         </div>
-                    </div>
-
-                    <div class="col-md-12 col-sm-12 border-top">
-                         <div class="col-md-4 col-sm-6">
-                              <div class="copyright-text"> 
-                                   <p>Copyright &copy; 2018 Your Company 
-                                   
-                                   | Design: Tooplate</p>
-                              </div>
-                         </div>
-                         <div class="col-md-6 col-sm-6">
-                              <div class="footer-link"> 
-                                   <a href="#">Laboratory Tests</a>
-                                   <a href="#">Departments</a>
-                                   <a href="#">Insurance Policy</a>
-                                   <a href="#">Careers</a>
-                              </div>
-                         </div>
-                         <div class="col-md-2 col-sm-2 text-align-center">
-                              <div class="angle-up-btn"> 
-                                  <a href="#top" class="smoothScroll wow fadeInUp" data-wow-delay="1.2s"><i class="fa fa-angle-up"></i></a>
-                              </div>
-                         </div>   
-                    </div>
-                    
-               </div>
-          </div>
-     </footer>
-
-     <!-- SCRIPTS -->
-     
-     <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-     <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
-
-
-
-<script>
-
-
-  @if(Session::has('success'))
-            toastr.success("{{ Session::get('success') }}");
-  @endif
-
-
-  @if(Session::has('info'))
-            toastr.info("{{ Session::get('info') }}");
-  @endif
-
-
-  @if(Session::has('warning'))
-            toastr.warning("{{ Session::get('warning') }}");
-  @endif
-
-
-  @if(Session::has('error'))
-            toastr.error("{{ Session::get('error') }}");
-  @endif
-
-
-</script>
-
-
-     <script>
-          $(document).ready(function(){
-               $("#new").click(function(){
-                    $("#name").show();
-                    $("#email").show();
-                    $("#phone").show();
-                    $("#patientId").hide();
-                   
-               });
-               $("#old").click(function(){
-                    $("#name").hide();
-                    $("#email").hide();
-                    $("#phone").hide();
-                    $("#patientId").show();
-               });
-
-              
-          });
-     </script>
-     <script type="text/javascript">
-          $(document).ready(function(){
-     
-               $(document).on('change','.department',function(){
-                     
-                    var department_id=$(this).val();   
-                    var div=$(this).parent();
-                    var op=" ";
-                    $.ajax({
-                         type:'get',
-                         url:'{!!URL::to('findDoctorDropdownList')!!}',
-                         data:{'id':department_id},
-                         dataType:'json',
-                              success:function(data){
-                                   $('#doctor').empty();
-                                   for(var i=0;i<data.length;i++){
-                                        op+='<option value="'+data[i].id+'">'+data[i].name+'</option>';
-                                      }
-                                   $("#doctor").append(op); 
-                              },
-                              error:function(){
-                                    $('#doctor').empty();
-                             }
-                         });
-                    });
-          });
-     </script>
-
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
-     <script>
-          @if(Session::has('message'))
-           toastr.success(Session::get('message'))
-          @endif
-     </script> --}}
-    
-     <script src="{{asset('assets/frontend/js/jquery.js')}}"></script>
-     <script src="{{asset('assets/frontend/js/bootstrap.min.js')}}"></script>
-     <script src="{{asset('assets/frontend/js/jquery.sticky.js')}}"></script>
-     <script src="{{asset('assets/frontend/js/jquery.stellar.min.js')}}"></script>
-     <script src="{{asset('assets/frontend/js/wow.min.js')}}"></script>
-     <script src="{{asset('assets/frontend/js/smoothscroll.js')}}"></script>
-     <script src="{{asset('assets/frontend/js/owl.carousel.min.js')}}"></script>
-     <script src="{{asset('assets/frontend/js/custom.js')}}"></script>
-     {{-- <script type="text/javascript">
-     $(document).ready(function(){
-
-          $('#date').change(function(){
-                
-               var doctor_id= $('#doctor').val();
-               var date= $(this).val();
-          
-               $.ajax({
-                    type:'get',
-                    url:'{!!URL::to('checkAppointmentAvailability')!!}',
-                    data:{
-                           'date':date,
-                           'doctor_id':doctor_id
-                         },
-                    dataType:'json',
-                    success:function(data){
-                              console.log(data)
-
-                    }
-
-                    error:function(){
-                              alert('mismatch')
-               
-                                   }
-               });
-          });
-
-     });
-</script> --}}
-
-
-</body>
-</html>
+ @endsection

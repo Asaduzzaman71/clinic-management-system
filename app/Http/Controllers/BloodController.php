@@ -24,6 +24,8 @@ class BloodController extends Controller
      */
     public function index()
     {
+        
+        $this->authorize('viewAny',Blood::class);
         $bloods = $this->bloodService->bloodList();
         return view('blood.index',compact('bloods'));
     }
@@ -35,6 +37,7 @@ class BloodController extends Controller
      */
     public function create()
     { 
+        $this->authorize('create',Blood::class);
         return view('blood.create');
     }
 
@@ -46,6 +49,8 @@ class BloodController extends Controller
      */
     public function store(BloodRequest $request)
     {
+        
+        $this->authorize('create',Blood::class);
         $validatedData = $request->validated(); 
         $this->bloodService->createOrUpdate($validatedData);
         Session::flash('message','Information stored successfully!!!!');
@@ -71,6 +76,8 @@ class BloodController extends Controller
      */
     public function edit($id)
     {
+        $blood = $this->bloodService->getById($id);
+        $this->authorize('update',$blood);
         $blood = $this->bloodService->getById($id);            
         return view('blood.edit', compact('blood'));
     }
@@ -84,6 +91,8 @@ class BloodController extends Controller
      */
     public function update(BloodRequest $request, $id)
     {
+        $blood = $this->bloodService->getById($id);
+        $this->authorize('update',$blood);
         $validatedData = $request->validated(); 
         $validatedData['id']=$id;
         
@@ -100,6 +109,8 @@ class BloodController extends Controller
      */
     public function destroy($id)
     {
+        $blood = $this->bloodService->getById($id);
+        $this->authorize('delete',$blood);
         $blood = $this->bloodService->delete($id);
        
         if ($blood) {
