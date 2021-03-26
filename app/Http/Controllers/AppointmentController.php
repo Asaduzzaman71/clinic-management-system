@@ -116,6 +116,7 @@ class AppointmentController extends Controller
     
     public function appointmentDetails(Request $request)
     {  
+        $this->authorize('view',$request->id); 
         $appointment=$this->appointmentService->getAppointmentById($request->id);
         $doctor = $this->doctorService->getById($appointment->doctor_id);
         return response()->json([
@@ -130,7 +131,10 @@ class AppointmentController extends Controller
    
     public function destroy($appointmentid)
     {
+
         $appointment=$this->appointmentService->getAppointmentById($appointmentid);
+        $this->authorize('delete', $appointment); 
+     
         $response = $this->appointmentService->delete($appointmentid);
       
        
@@ -146,24 +150,26 @@ class AppointmentController extends Controller
     }
 
     public function getRequestedAppointments($doctor){
+        $this->authorize('viewAny', Appointment::class); 
         $appointments=$this->appointmentService->getRequestedAppointmentsByDoctorId($doctor);
         return view('appointment.requests',compact('appointments'));
     }
 
     public function getPatientPendingAppointments($patient){
- 
+        $this->authorize('viewAny', Appointment::class); 
         $appointments=$this->appointmentService->getPatientPendingAppointmentsByPatientId($patient);
         return view('appointment.patient.pending',compact('appointments'));
     }
     public function getPatientAcceptedAppointments($patient){
+        $this->authorize('viewAny', Appointment::class); 
         $appointments=$this->appointmentService->getPatientApprovedAppointmentsByPatientId($patient);
         return view('appointment.patient.approved',compact('appointments'));
 
     }
 
     public function approveAppointments($appointmentId){
-      
-       //$this->appointmentService->approveRequestedAppointment($appointmentId);
+        $this->authorize('viewAny', Appointment::class); 
+        $this->appointmentService->approveRequestedAppointment($appointmentId);
         $appointment=$this->appointmentService->getAppointmentById($appointmentId);
         //dd($appointment);
         event(new NewAppointmentApprovedEvent($appointment));
@@ -177,6 +183,7 @@ class AppointmentController extends Controller
     }
 
     public function getApprovedAppointments($doctor){
+        $this->authorize('viewAny', Appointment::class); 
         $appointments=$this->appointmentService->getApprovedAppointmentsByDoctorId($doctor);
         return view('appointment.approved',compact('appointments'));
 

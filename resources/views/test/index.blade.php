@@ -14,10 +14,11 @@
          </div>
 
 
-
+         @can('create', App\Models\Test::class)
          <div class="col-lg-3 offset-lg-3">
              <a href="{{route('tests.create')}}" class="btn btn-primary" style="margin-left: 35px">Add New test</a>
          </div>
+         @endcan
      </div>
 
    </br>

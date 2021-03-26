@@ -10,13 +10,14 @@ use App\Models\Schedule;
 use App\Models\Day;
 
 
-class SendAppointmentAcceptanceEmailListener
+class SendAppointmentAcceptanceEmailListener implements ShouldQueue
 {
    
  
     public function handle($event)
     {
 
+        sleep(60);
         $date=$event->appointment->date;
         
        

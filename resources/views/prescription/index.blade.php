@@ -16,9 +16,9 @@
 
 
          <div class="col-lg-3 offset-lg-3">
-          @if(Auth()->user()->role_id==2)
+          @can('create', App\Models\Prescription::class)
              <a href="{{route('prescriptions.create')}}" class="btn btn-primary" style="margin-left: 35px">Add New prescription</a>
-          @endif
+          @endcan
             </div>
          
      </div>
@@ -50,12 +50,12 @@
               <td class="center">{{$prescription->doctor->name}}</td>
                      
               <td class="center">
-                @if(Auth()->User()->role_id==2)
+                @can('update', $prescription)
                  
                   <a class="btn btn-primary" href="{{route('prescriptions.edit',$prescription->id)}}">
                     <i class="fas fa-edit">Edit</i> 
                   </a>
-                @endif
+                @endcan
                   <a class="btn btn-info" href="{{route('prescriptions.show',$prescription->id)}}">
                     <i class="fas fa-eye">View Prescription</i> 
                   </a>
@@ -63,12 +63,12 @@
                   <a class="btn btn-info" href="{{route('diagnosisReports.show',$prescription->id)}}">
                     <i class="fas fa-eye">View Report</i> 
                   </a>
-                @if(Auth()->User()->role_id==2)
+                  @can('delete', $prescription)
                   
                   {!! Form::open(['method' => 'DELETE','route' => ['prescriptions.destroy', $prescription->id],'style'=>'display:inline']) !!}
                   {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
                   {!! Form::close() !!}
-                @endif
+                  @endcan
               </td>
           </tr>
           @endforeach

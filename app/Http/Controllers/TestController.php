@@ -24,6 +24,7 @@ class TestController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Test::class); 
         $tests = $this->testService->testList();
         return view('test.index',compact('tests'));
     }
@@ -35,6 +36,7 @@ class TestController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Test::class); 
         return view('test.create');
     }
 
@@ -46,6 +48,7 @@ class TestController extends Controller
      */
     public function store(TestRequest $request)
     {
+        $this->authorize('store', Test::class); 
         $validatedData = $request->validated(); 
         $this->testService->createOrUpdate($validatedData);
         Session::flash('message','Information stored successfully!!!!');
@@ -71,7 +74,9 @@ class TestController extends Controller
      */
     public function edit($id)
     {
-        $test = $this->testService->getById($id);            
+        
+        $test = $this->testService->getById($id);  
+        $this->authorize('update',$test);           
         return view('test.edit', compact('test'));
     }
 
@@ -84,6 +89,8 @@ class TestController extends Controller
      */
     public function update(TestRequest $request, $id)
     {
+        $test = $this->testService->getById($id);  
+        $this->authorize('update',$test);
         $validatedData = $request->validated(); 
         $validatedData['id']=$id;
         $this->testService->createOrUpdate($validatedData); 
@@ -99,6 +106,8 @@ class TestController extends Controller
      */
     public function destroy($id)
     {
+        $test = $this->testService->getById($id);  
+        $this->authorize('delete',$test);
         $test = $this->testService->delete($id);
        
         if ($test) {

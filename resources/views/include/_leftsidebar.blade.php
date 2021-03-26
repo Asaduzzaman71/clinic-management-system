@@ -24,13 +24,14 @@
         </a><!-- br-menu-link -->
       </li><!-- br-menu-item --><!-- br-menu-item -->
       @endcan
-
+      @can('viewAny', App\Models\Test::class)
       <li class="br-menu-item">
         <a href="{{ route('tests.index') }}" class="br-menu-link">
           <i class="menu-item-icon icon ion-ios-home-outline tx-24"></i>
           <span class="menu-item-label">Test</span>
         </a><!-- br-menu-link -->
       </li><!-- br-menu-item -->
+      @endcan
       
       @if(Auth()->user()->role_id==2)
       <li class="br-menu-item">
@@ -48,7 +49,7 @@
         </a><!-- br-menu-link -->
       </li><!-- br-menu-item -->
       @endif
-
+      
       <li class="br-menu-item">
         <a href="{{route('schedules.index')}}" class="br-menu-link">
           <i class="menu-item-icon icon ion-ios-email-outline tx-24"></i>
@@ -77,7 +78,7 @@
         <ul class="br-menu-sub">
           <li class="sub-item"><a href="{{route('appointments.accepted',$patient->id)}}" class="sub-link">Accepted Appointments</a></li>
           <li class="sub-item"><a href="{{route('appointments.pending',$patient->id)}}" class="sub-link">Requested Appointments</a></li>
-          <li class="sub-item"><a href="card-listing.html" class="sub-link">Shop &amp; Listing</a></li>
+          
         </ul>
       </li>
       @endif
@@ -124,13 +125,14 @@
         </a><!-- br-menu-link -->
       </li><!-- br-menu-item --><!-- br-menu-item -->
      @endcan
+     @can('viewAny', App\Models\Invoice::class)
       <li class="br-menu-item">
         <a href="{{route('invoices.index')}}" class="br-menu-link">
           <i class="menu-item-icon icon ion-ios-email-outline tx-24"></i>
           <span class="menu-item-label">Invoice</span>
         </a><!-- br-menu-link -->
       </li><!-- br-menu-item --><!-- br-menu-item -->
-  
+      @endcan
   
      
      
@@ -171,6 +173,22 @@
       @if(Auth()->user()->role_id==3)
       <li class="br-menu-item">
         <a href="{{route('patients.edit',$patient->id)}}" class="br-menu-link">
+          <i class="menu-item-icon icon ion-ios-email-outline tx-24"></i>
+          <span class="menu-item-label">Manage Profile</span>
+        </a><!-- br-menu-link -->
+      </li><!-- br-menu-item --><!-- br-menu-item -->
+      @endif
+      @if(Auth()->user()->role_id==4)
+      <li class="br-menu-item">
+        <a href="{{route('accountants.edit',$accountant->id)}}" class="br-menu-link">
+          <i class="menu-item-icon icon ion-ios-email-outline tx-24"></i>
+          <span class="menu-item-label">Manage Profile</span>
+        </a><!-- br-menu-link -->
+      </li><!-- br-menu-item --><!-- br-menu-item -->
+      @endif
+      @if(Auth()->user()->role_id==5)
+      <li class="br-menu-item">
+        <a href="{{route('laboratorists.edit',$laboratorist->id)}}" class="br-menu-link">
           <i class="menu-item-icon icon ion-ios-email-outline tx-24"></i>
           <span class="menu-item-label">Manage Profile</span>
         </a><!-- br-menu-link -->

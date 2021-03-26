@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Invoice;
 use App\Models\User;
 use App\Models\InvoiceEntry;
@@ -81,8 +80,9 @@ class InvoiceController extends Controller
     public function show($invoiceNumber)
     {   
         $invoice=Invoice::Where('invoice_number',$invoiceNumber)->first();
-        $this->authorize('view',$invoiceNumber); 
+        $this->authorize('view',$invoice); 
         $user=User::Where('id',$invoice->created_by)->first();
+        $invoiceEntries=InvoiceEntry::Where('invoice_number',$invoiceNumber)->get();
         return view('invoice.invoice',compact('invoiceEntries','invoice','user'));
     }
 
@@ -145,10 +145,12 @@ class InvoiceController extends Controller
     
     public function destroy($invoiceNumber)
     {
+        //dd($invoiceNumber);
         $invoice=Invoice::Where('invoice_number',$invoiceNumber)->first();
         $this->authorize('delete',$invoice);
-        $invoice=InvoiceEntry::Where('invoice_number',$invoiceNumber);
         $invoice->delete();
+        $invoiceEntries=InvoiceEntry::Where('invoice_number',$invoiceNumber);
+        $invoiceEntries->delete();
         
     }
 
